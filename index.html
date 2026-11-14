@@ -1337,7 +1337,17 @@
                     </table>
                     <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (SAS) dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
                     <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (SAS) berlangsung:</p>
-                    <div id="ba-catatan-preview" class="whitespace-pre-wrap min-h-[34mm] border-b border-dotted border-black pb-2 mb-5">..............................................................................................................................</div>
+                    <div id="ba-catatan-preview" class="mb-5">
+                        <div id="ba-catatan-text" class="whitespace-pre-wrap min-h-[5mm]"></div>
+                        <div class="mt-2 space-y-2" aria-hidden="true">
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                        </div>
+                    </div>
                     <p class="mb-10">Berita acara ini dibuat dengan sesungguhnya.</p>
                 </div>
                 <div class="flex justify-end text-center text-[12pt]">
@@ -5125,7 +5135,7 @@
  function val(id){return document.getElementById('ba-'+id)?.value?.trim()||''}
  function update(){
    ids.forEach(id=>document.querySelectorAll('[data-ba="'+id+'"]').forEach(el=>el.textContent=val(id)||el.getAttribute('data-placeholder')||'................................'));
-   document.getElementById('ba-catatan-preview').textContent=val('catatan')||'..............................................................................................................................';
+   document.getElementById('ba-catatan-text').textContent=val('catatan');
    document.getElementById('ba-nama-preview').textContent=val('pengawas')||'................................................';
    document.getElementById('ba-nip-preview').textContent=val('nip')||'................................';
    const cfg=id=>document.getElementById(id)?.value||'';
