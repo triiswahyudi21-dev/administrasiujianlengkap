@@ -488,6 +488,9 @@
                 <button onclick="switchTab('tab-preview-invigilators')" id="nav-tab-preview-invigilators" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
                     <i class="fa-solid fa-user-tie"></i> <span>13. Pengawas Ruang</span>
                 </button>
+                <button onclick="switchTab('tab-berita-acara')" id="nav-tab-berita-acara" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
+                    <i class="fa-solid fa-file-signature"></i> <span>14. Berita Acara</span>
+                </button>
             </nav>
         </div>
     </header>
@@ -1266,6 +1269,88 @@
             </div>
             <div id="invigilator-preview-container" class="print-area bg-slate-200/60 p-4 sm:p-8 rounded-2xl border border-slate-300 min-h-[600px] overflow-x-auto"></div>
         </section>
+
+        <!-- TAB 14: BERITA ACARA -->
+        <section id="tab-berita-acara" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 no-print">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-file-signature text-cyan-700 mr-2"></i>Berita Acara Pelaksanaan ASAS</h2>
+                        <p class="text-sm text-slate-500 mt-1">Isi seluruh bagian secara manual. Kop mengikuti pengaturan pada menu Identitas.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="baReset()" class="px-3 py-2 rounded-lg bg-slate-100 text-slate-700 text-sm font-semibold">Kosongkan Form</button>
+                        <button type="button" onclick="baPrint()" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold"><i class="fa-solid fa-print mr-1"></i> Cetak Berita Acara</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                    <label>Hari <input id="ba-hari" class="ba-field" placeholder="................................"></label>
+                    <label>Tanggal <input id="ba-tanggal" class="ba-field" placeholder="................................"></label>
+                    <label>Bulan <input id="ba-bulan" class="ba-field" placeholder="................................"></label>
+                    <label>Tahun <input id="ba-tahun" class="ba-field" placeholder="................................"></label>
+                    <label>Waktu mulai <input id="ba-mulai" class="ba-field" placeholder="........"></label>
+                    <label>Waktu selesai <input id="ba-selesai" class="ba-field" placeholder="........"></label>
+                    <label class="md:col-span-2">Pada sekolah <input id="ba-sekolah" class="ba-field" placeholder="Nama sekolah"></label>
+                    <label>Ruang <input id="ba-ruang" class="ba-field" placeholder="........................"></label>
+                    <label>Jumlah peserta seharusnya (siswa) <input id="ba-jumlah" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Nomor peserta dari - sampai <input id="ba-nomor" class="ba-field" placeholder="........ s.d. ........"></label>
+                    <label>Jumlah peserta tidak hadir (siswa) <input id="ba-tidak-hadir" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label class="md:col-span-2">Nomor peserta tidak hadir <input id="ba-nomor-tidak" class="ba-field" placeholder="Jika tidak ada, isi '-'"></label>
+                    <label>Jumlah peserta hadir (siswa) <input id="ba-hadir" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Mata pelajaran <input id="ba-mapel" class="ba-field" placeholder="................................"></label>
+                    <label>Kode soal <input id="ba-kode" class="ba-field" placeholder="................................"></label>
+                    <label>Jumlah lembar soal (eksemplar) <input id="ba-soal" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Jumlah lembar jawaban (eksemplar) <input id="ba-jawaban" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Jumlah berita acara (eksemplar) <input id="ba-ba" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Jumlah blangko daftar hadir (eksemplar) <input id="ba-blangko" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Nama pengawas <input id="ba-pengawas" class="ba-field" placeholder="Nama lengkap pengawas"></label>
+                    <label>NIP pengawas <input id="ba-nip" class="ba-field" placeholder="NIP"></label>
+                    <label class="md:col-span-3">Catatan selama asesmen berlangsung <textarea id="ba-catatan" rows="4" class="ba-field" placeholder="Tuliskan catatan pelaksanaan asesmen..."></textarea></label>
+                </div>
+            </div>
+            <div id="ba-print-area" class="bg-white max-w-[210mm] mx-auto p-8 sm:p-12 shadow-md border text-black" style="font-family:'Times New Roman',Times,serif">
+                <div class="flex items-center justify-between border-b-4 border-black pb-3 mb-5" id="ba-kop">
+                    <img id="ba-logo-kiri" class="w-20 h-20 object-contain" alt="Logo instansi">
+                    <div class="text-center flex-1 px-3 leading-tight">
+                        <div id="ba-gov1" class="text-sm font-bold uppercase"></div>
+                        <div id="ba-gov2" class="text-sm font-bold uppercase"></div>
+                        <div id="ba-school-name" class="text-xl font-bold uppercase"></div>
+                        <div id="ba-address" class="text-xs"></div>
+                    </div>
+                    <img id="ba-logo-kanan" class="w-20 h-20 object-contain" alt="Logo sekolah">
+                </div>
+                <div class="text-center font-bold text-base leading-snug mb-1">BERITA ACARA PELAKSANAAN<br>ASESMEN SUMATIF AKHIR SEMESTER (SAS) <span id="ba-semester-preview">GANJIL</span></div>
+                <div class="text-center font-bold mb-6">TAHUN AJARAN <span id="ba-tapel-preview">2026/2027</span></div>
+                <div class="text-justify text-[12pt] leading-relaxed">
+                    <p class="mb-4">Pada hari ini <span data-ba="hari">........................</span> tanggal <span data-ba="tanggal">........................</span> bulan <span data-ba="bulan">........................</span> tahun <span data-ba="tahun">........................</span>.</p>
+                    <p class="mb-2">a. Telah diselenggarakan Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span>, dengan keterangan sebagai berikut:</p>
+                    <table class="w-full text-[12pt] mb-4" style="border-collapse:collapse">
+                        <tbody>
+                            <tr><td class="w-[42%] py-1">Pada Sekolah</td><td class="w-6">:</td><td data-ba="sekolah">................................................</td></tr>
+                            <tr><td class="py-1">Ruang</td><td>:</td><td data-ba="ruang">................................................</td></tr>
+                            <tr><td class="py-1">Jumlah peserta seharusnya</td><td>:</td><td><span data-ba="jumlah">......</span> siswa</td></tr>
+                            <tr><td class="py-1">Nomor peserta</td><td>:</td><td data-ba="nomor">...... s.d. ......</td></tr>
+                            <tr><td class="py-1">Jumlah peserta yang tidak hadir</td><td>:</td><td><span data-ba="tidak-hadir">......</span> siswa</td></tr>
+                            <tr><td class="py-1">Nomor peserta tidak hadir</td><td>:</td><td data-ba="nomor-tidak">............................</td></tr>
+                            <tr><td class="py-1">Jumlah peserta yang hadir</td><td>:</td><td><span data-ba="hadir">......</span> siswa</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (SAS) dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
+                    <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (SAS) berlangsung:</p>
+                    <div id="ba-catatan-preview" class="whitespace-pre-wrap min-h-[34mm] border-b border-dotted border-black pb-2 mb-5">..............................................................................................................................</div>
+                    <p class="mb-10">Berita acara ini dibuat dengan sesungguhnya.</p>
+                </div>
+                <div class="flex justify-end text-center text-[12pt]">
+                    <div class="w-[65mm]">
+                        <p>Yang membuat berita acara</p><p class="mt-1">Pengawas</p>
+                        <div class="h-24"></div>
+                        <p id="ba-nama-preview" class="font-bold underline">................................................</p>
+                        <p>NIP. <span id="ba-nip-preview">................................</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- PASTE DATA MODAL -->
@@ -2906,7 +2991,7 @@
             const targetEl = document.getElementById(tabId);
             if (targetEl) targetEl.classList.remove('hidden');
 
-            const tabKeys = ['identitas', 'jadwal-asas', 'students', 'room-inventory', 'shuffle', 'preview-recap', 'preview-roster', 'preview-attendance', 'preview-cards', 'preview-desk', 'preview-seating', 'mel-asas', 'preview-invigilators'];
+            const tabKeys = ['identitas', 'jadwal-asas', 'students', 'room-inventory', 'shuffle', 'preview-recap', 'preview-roster', 'preview-attendance', 'preview-cards', 'preview-desk', 'preview-seating', 'mel-asas', 'preview-invigilators', 'berita-acara'];
             tabKeys.forEach(t => {
                 const btn = document.getElementById(`nav-tab-${t}`);
                 if (btn) {
@@ -4971,7 +5056,7 @@
     const tabIds = [
         'tab-identitas', 'tab-jadwal-asas', 'tab-students', 'tab-room-inventory', 'tab-shuffle',
         'tab-preview-recap', 'tab-preview-roster', 'tab-preview-attendance',
-        'tab-preview-cards', 'tab-preview-desk', 'tab-preview-seating', 'tab-mel-asas'
+        'tab-preview-cards', 'tab-preview-desk', 'tab-preview-seating', 'tab-mel-asas', 'tab-preview-invigilators', 'tab-berita-acara'
     ];
     function showTabFallback(tabId) {
         const target = document.getElementById(tabId);
@@ -5018,6 +5103,52 @@
     if (typeof window.switchTab !== 'function') {
         window.switchTab = showTabFallback;
     }
+})();
+</script>
+
+
+<style>
+.ba-field{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:#fff}
+#tab-berita-acara label{font-weight:600;color:#334155;font-size:12px}
+@media print{
+ @page{size:A4 portrait;margin:15mm}
+ body.ba-printing *{visibility:hidden!important}
+ body.ba-printing #ba-print-area,body.ba-printing #ba-print-area *{visibility:visible!important}
+ body.ba-printing #ba-print-area{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;padding:0;border:0;box-shadow:none}
+ body.ba-printing #ba-kop img{width:22mm;height:22mm}
+}
+</style>
+<script>
+(function(){
+ const ids=['hari','tanggal','bulan','tahun','mulai','selesai','sekolah','ruang','jumlah','nomor','tidak-hadir','nomor-tidak','hadir','mapel','kode','soal','jawaban','ba','blangko','pengawas','nip','catatan'];
+ const key='smpn3_berita_acara_manual_v1';
+ function val(id){return document.getElementById('ba-'+id)?.value?.trim()||''}
+ function update(){
+   ids.forEach(id=>document.querySelectorAll('[data-ba="'+id+'"]').forEach(el=>el.textContent=val(id)||el.getAttribute('data-placeholder')||'................................'));
+   document.getElementById('ba-catatan-preview').textContent=val('catatan')||'..............................................................................................................................';
+   document.getElementById('ba-nama-preview').textContent=val('pengawas')||'................................................';
+   document.getElementById('ba-nip-preview').textContent=val('nip')||'................................';
+   const cfg=id=>document.getElementById(id)?.value||'';
+   document.getElementById('ba-gov1').textContent=cfg('cfg-gov1');
+   document.getElementById('ba-gov2').textContent=cfg('cfg-gov2');
+   document.getElementById('ba-school-name').textContent=cfg('cfg-school');
+   document.getElementById('ba-address').textContent=cfg('cfg-address');
+   const semester=cfg('cfg-semester')||'Ganjil';
+   ['ba-semester-preview','ba-semester-a','ba-semester-b'].forEach(id=>document.getElementById(id).textContent=semester.toUpperCase());
+   document.getElementById('ba-tapel-preview').textContent=cfg('cfg-tapel')||'2026/2027';
+   ['left','right'].forEach(side=>{
+     const src=document.getElementById('custom-logo-'+side+'-img')?.src;
+     const img=document.getElementById('ba-logo-'+(side==='left'?'kiri':'kanan'));
+     if(src && !src.endsWith('/')) img.src=src;
+   });
+   try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(ids.map(id=>[id,val(id)]))))}catch(e){}
+ }
+ window.baReset=function(){if(!confirm('Kosongkan semua isian berita acara?'))return;ids.forEach(id=>{const el=document.getElementById('ba-'+id);if(el)el.value=''});update()};
+ window.baPrint=function(){update();document.body.classList.add('ba-printing');window.print();setTimeout(()=>document.body.classList.remove('ba-printing'),700)};
+ document.addEventListener('input',e=>{if(e.target?.id?.startsWith('ba-')||e.target?.id?.startsWith('cfg-'))update()});
+ window.addEventListener('afterprint',()=>document.body.classList.remove('ba-printing'));
+ try{const saved=JSON.parse(localStorage.getItem(key)||'{}');ids.forEach(id=>{const el=document.getElementById('ba-'+id);if(el&&saved[id])el.value=saved[id]})}catch(e){}
+ document.addEventListener('DOMContentLoaded',update);setTimeout(update,500);
 })();
 </script>
 
