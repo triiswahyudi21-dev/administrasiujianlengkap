@@ -331,6 +331,16 @@
             #tab-mel-asas .mel-asas-paper .print-only-mel { display: table-cell !important; }
         }
 
+        /* Daftar hadir peserta: kop resmi dan cetak A4 potret */
+        @media print {
+            #attendance-preview-container .attendance-paper {
+                width: 100% !important; max-width: none !important; min-height: 0 !important;
+                margin: 0 !important; padding: 8mm !important; border: 0 !important;
+                box-shadow: none !important; border-radius: 0 !important;
+            }
+            #attendance-preview-container .attendance-kop img { width: 25mm !important; height: 21mm !important; }
+        }
+
         /* Filter Efek Ketebalan & Transparansi Stempel & TTD */
         .thick-stamp-filter {
             filter: contrast(150%) brightness(80%) drop-shadow(0px 0px 0.5px #000);
@@ -4083,6 +4093,8 @@
                 return;
             }
 
+            const logoLeftSrc = customLogoLeftBase64 || getPemkabLogoSvg();
+            const logoRightSrc = customLogoRightBase64 || getSchoolLogoSvg();
             let html = '';
 
             targetRooms.forEach(room => {
@@ -4090,8 +4102,20 @@
                 const totalRows = Math.max(30, roomSeats.length);
 
                 html += `
-                    <div class="bg-white p-6 sm:p-8 mb-6 shadow-md rounded-lg page-break min-h-[280mm] max-w-[210mm] mx-auto border font-serif text-[11pt] leading-tight" style="font-family: Arial, Helvetica, sans-serif;">
+                    <div class="bg-white p-6 sm:p-8 mb-6 shadow-md rounded-lg page-break min-h-[280mm] max-w-[210mm] mx-auto border font-serif text-[11pt] leading-tight attendance-paper" style="font-family: Arial, Helvetica, sans-serif;">
                         
+                        <!-- Kop resmi sekolah, disamakan dengan Daftar Peserta Ruang -->
+                        <div class="flex items-center justify-between border-b-4 border-black pb-2 mb-3 attendance-kop">
+                            <img src="${logoLeftSrc}" class="w-28 h-20 object-contain flex-shrink-0" alt="Logo Pemkab">
+                            <div class="text-center flex-grow font-kop px-2 leading-tight">
+                                <div class="text-[11pt] uppercase font-bold tracking-tight">${cfg.gov1}</div>
+                                <div class="text-[11pt] uppercase font-bold tracking-tight">${cfg.gov2}</div>
+                                <div class="text-[16pt] uppercase font-extrabold tracking-tight">${cfg.school}</div>
+                                <div class="text-[10pt] text-slate-700">${cfg.address}</div>
+                            </div>
+                            <img src="${logoRightSrc}" class="w-28 h-20 object-contain flex-shrink-0" alt="Logo Sekolah">
+                        </div>
+
                         <!-- Header Judul Presisi -->
                         <div class="text-center font-bold text-[12pt] uppercase mb-4 tracking-wide font-sans leading-snug">
                             <div class="text-[13pt] font-extrabold">DAFTAR HADIR PESERTA</div>
@@ -4586,9 +4610,24 @@
             else if (type === 'seating') { switchTab('tab-preview-seating'); renderSeatingPreview(); }
             else if (type === 'mel-asas') { switchTab('tab-mel-asas'); renderMelAsasPreview(); }
 
+            // Orientasi standar A4 potret; MEL ASAS tetap A4 lanskap.
+            const orientationStyleId = 'document-print-orientation-style';
+            let orientationStyle = document.getElementById(orientationStyleId);
+            if (!orientationStyle) {
+                orientationStyle = document.createElement('style');
+                orientationStyle.id = orientationStyleId;
+                document.head.appendChild(orientationStyle);
+            }
+            orientationStyle.textContent = `@media print { @page { size: A4 ${type === 'mel-asas' ? 'landscape' : 'portrait'}; } }`;
+            const cleanupOrientationStyle = () => {
+                const style = document.getElementById(orientationStyleId);
+                if (style) style.remove();
+                window.removeEventListener('afterprint', cleanupOrientationStyle);
+            };
+            window.addEventListener('afterprint', cleanupOrientationStyle);
             showToast("Menyiapkan dokumen cetak...", "info");
             setTimeout(() => {
-                try { window.print(); } catch (err) { printInNewWindow(type); }
+                try { window.print(); } catch (err) { cleanupOrientationStyle(); printInNewWindow(type); }
             }, 200);
         }
 
@@ -4618,6 +4657,7 @@
                     <script src="https://cdn.tailwindcss.com"><\/script>
                     <style>
                         @media print {
+                            @page { size: A4 portrait; }
                             body { background: white !important; margin: 0 !important; padding: 0 !important; font-size: 11pt !important; font-family: 'Times New Roman', Times, serif !important; }
                             .page-break { page-break-after: always !important; break-after: page !important; }
                             .card-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 4mm 6mm !important; }
