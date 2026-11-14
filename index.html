@@ -1829,9 +1829,25 @@
             } catch (err) {}
         }
 
+        function refreshActiveGeneratedPreview() {
+            const activeTab = document.querySelector('.tab-content:not(.hidden)');
+            if (!activeTab) return;
+            switch (activeTab.id) {
+                case 'tab-preview-cards': renderCardsPreview(); break;
+                case 'tab-preview-desk': renderDeskPreview(); break;
+                case 'tab-preview-roster': renderRosterPreview(); break;
+                case 'tab-preview-recap': renderRecapPreview(); break;
+                case 'tab-preview-attendance': renderAttendancePreview(); break;
+                case 'tab-preview-seating': renderSeatingPreview(); break;
+                case 'tab-mel-asas': renderMelAsasPreview(); break;
+                case 'tab-preview-invigilators': renderInvigilatorAttendance(); break;
+            }
+        }
+
         async function saveHeaderConfigToCloud() {
             const cfg = getHeaderConfig();
             try { localStorage.setItem('smpn3_header', JSON.stringify(cfg)); } catch(e){}
+            refreshActiveGeneratedPreview();
             if (!isCloudReady || !db || !currentUser) return;
             try {
                 await setDoc(getDocRef('settings', 'header'), { ...cfg, updatedAt: new Date().toISOString() });
@@ -1866,6 +1882,7 @@
             };
 
             try { localStorage.setItem('smpn3_images', JSON.stringify(payload)); } catch(e){}
+            refreshActiveGeneratedPreview();
             if (!isCloudReady || !db || !currentUser) return;
             try {
                 await setDoc(getDocRef('settings', 'images'), payload);
@@ -4497,9 +4514,13 @@
             const stampSrc = customStempelBase64 || '';
             const scheduleDayDate = `${row[0] || ''}${row[1] ? ', ' + row[1] : ''}`;
             const examTime = row[3] || '';
-            let stampHtml = stampSrc
+            const signatureSrc = customSignatureBase64 || '';
+            const stampHtml = stampSrc
                 ? `<img src="${stampSrc}" class="invigilator-stamp" alt="Stempel sekolah">`
-                : `<div class="invigilator-stamp-placeholder">STEMPEL<br>SEKOLAH</div>`;
+                : '';
+            const signatureHtml = signatureSrc
+                ? `<img src="${signatureSrc}" class="invigilator-signature thick-sig-filter" alt="Tanda tangan Kepala Sekolah">`
+                : '';
 
             container.innerHTML = `
                 <style>
@@ -4515,9 +4536,9 @@
                     .invigilator-table th { text-align:center; font-weight:bold; }
                     .invigilator-table td { height:8mm; }
                     .invigilator-sign { margin:8mm 4mm 0 auto; width:72mm; text-align:center; line-height:1.3; position:relative; min-height:48mm; }
-                    .invigilator-sign .stamp-wrap { height:25mm; position:relative; margin:1mm auto; }
-                    .invigilator-stamp { position:absolute; width:31mm; height:31mm; object-fit:contain; left:50%; top:-3mm; transform:translateX(-50%); opacity:.82; mix-blend-mode:multiply; }
-                    .invigilator-stamp-placeholder { position:absolute; left:50%; top:2mm; transform:translateX(-50%); width:23mm; height:23mm; border:1px dashed #999; border-radius:50%; color:#aaa; font:8pt Arial,sans-serif !important; display:flex; align-items:center; justify-content:center; text-align:center; }
+                    .invigilator-sign .stamp-wrap { height:27mm; position:relative; margin:1mm auto; }
+                    .invigilator-stamp { position:absolute; width:31mm; height:31mm; object-fit:contain; left:50%; top:-3mm; transform:translateX(-50%); opacity:.82; mix-blend-mode:multiply; z-index:1; }
+                    .invigilator-signature { position:absolute; width:38mm; height:18mm; object-fit:contain; left:50%; top:5mm; transform:translateX(-50%); opacity:.95; z-index:2; }
                     @media print { .invigilator-paper { width:100%; min-height:0; margin:0; padding:0; page-break-after:always; } .invigilator-paper:last-child { page-break-after:auto; } }
                 </style>
                 <div class="invigilator-paper page-break">
@@ -4555,7 +4576,7 @@
                     <div class="invigilator-sign">
                         <div>${escapeHtml(cfg.date)}</div>
                         <div>Kepala ${escapeHtml(cfg.school.replace(/^SMP\s*/i,'')) ? 'SMP ' + escapeHtml(cfg.school.replace(/^SMP\s*/i,'')) : escapeHtml(cfg.school)}</div>
-                        <div class="stamp-wrap">${stampHtml}</div>
+                        <div class="stamp-wrap">${stampHtml}${signatureHtml}</div>
                         <div style="font-weight:bold;text-decoration:underline;margin-top:1mm">${escapeHtml(cfg.principal)}</div>
                         <div>NIP. ${escapeHtml(cfg.nip)}</div>
                     </div>
