@@ -1290,21 +1290,21 @@
                     <label>Tahun <input id="ba-tahun" class="ba-field" placeholder="................................"></label>
                     <label>Waktu mulai <input id="ba-mulai" class="ba-field" placeholder="........"></label>
                     <label>Waktu selesai <input id="ba-selesai" class="ba-field" placeholder="........"></label>
-                    <label class="md:col-span-2">Pada sekolah <input id="ba-sekolah" class="ba-field" placeholder="Nama sekolah"></label>
+                    <label class="md:col-span-2">Pada sekolah <input id="ba-sekolah" type="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
                     <label>Ruang <input id="ba-ruang" class="ba-field" placeholder="........................"></label>
-                    <label>Jumlah peserta seharusnya (siswa) <input id="ba-jumlah" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label>Nomor peserta dari - sampai <input id="ba-nomor" class="ba-field" placeholder="........ s.d. ........"></label>
-                    <label>Jumlah peserta tidak hadir (siswa) <input id="ba-tidak-hadir" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label class="md:col-span-2">Nomor peserta tidak hadir <input id="ba-nomor-tidak" class="ba-field" placeholder="Jika tidak ada, isi '-'"></label>
-                    <label>Jumlah peserta hadir (siswa) <input id="ba-hadir" type="number" min="0" class="ba-field" placeholder="0"></label>
+                    <label>Jumlah peserta seharusnya (siswa) <input id="ba-jumlah" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Nomor peserta dari - sampai <input id="ba-nomor" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah peserta tidak hadir (siswa) <input id="ba-tidak-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label class="md:col-span-2">Nomor peserta tidak hadir <input id="ba-nomor-tidak" type="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah peserta hadir (siswa) <input id="ba-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
                     <label>Mata pelajaran <input id="ba-mapel" class="ba-field" placeholder="................................"></label>
                     <label>Kode soal <input id="ba-kode" class="ba-field" placeholder="................................"></label>
-                    <label>Jumlah lembar soal (eksemplar) <input id="ba-soal" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label>Jumlah lembar jawaban (eksemplar) <input id="ba-jawaban" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label>Jumlah berita acara (eksemplar) <input id="ba-ba" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label>Jumlah blangko daftar hadir (eksemplar) <input id="ba-blangko" type="number" min="0" class="ba-field" placeholder="0"></label>
-                    <label>Nama pengawas <input id="ba-pengawas" class="ba-field" placeholder="Nama lengkap pengawas"></label>
-                    <label>NIP pengawas <input id="ba-nip" class="ba-field" placeholder="NIP"></label>
+                    <label>Jumlah lembar soal (eksemplar) <input id="ba-soal" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah lembar jawaban (eksemplar) <input id="ba-jawaban" type="text" inputmode="text" class="ba-field" placeholder="................................................"></label>
+                    <label>Jumlah berita acara (eksemplar) <input id="ba-ba" type="text" inputmode="text" class="ba-field" placeholder="................................................"></label>
+                    <label>Jumlah blangko daftar hadir (eksemplar) <input id="ba-blangko" type="text" inputmode="text" class="ba-field" placeholder="................................................"></label>
+                    <label>Nama pengawas <input id="ba-pengawas" type="text" class="ba-field" placeholder="................................................"></label>
+                    <label>NIP pengawas <input id="ba-nip" type="text" class="ba-field" placeholder="................................................"></label>
                     <label class="md:col-span-3">Catatan selama asesmen berlangsung <textarea id="ba-catatan" rows="4" class="ba-field" placeholder="Tuliskan catatan pelaksanaan asesmen..."></textarea></label>
                 </div>
             </div>
@@ -1326,26 +1326,26 @@
                     <p class="mb-2">a. Telah diselenggarakan Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span>, dengan keterangan sebagai berikut:</p>
                     <table class="w-full text-[12pt] mb-4" style="border-collapse:collapse">
                         <tbody>
-                            <tr><td class="w-[42%] py-1">Pada Sekolah</td><td class="w-6">:</td><td data-ba="sekolah">................................................</td></tr>
-                            <tr><td class="py-1">Ruang</td><td>:</td><td data-ba="ruang">................................................</td></tr>
-                            <tr><td class="py-1">Jumlah peserta seharusnya</td><td>:</td><td><span data-ba="jumlah">......</span> siswa</td></tr>
-                            <tr><td class="py-1">Nomor peserta</td><td>:</td><td data-ba="nomor">...... s.d. ......</td></tr>
-                            <tr><td class="py-1">Jumlah peserta yang tidak hadir</td><td>:</td><td><span data-ba="tidak-hadir">......</span> siswa</td></tr>
-                            <tr><td class="py-1">Nomor peserta tidak hadir</td><td>:</td><td data-ba="nomor-tidak">............................</td></tr>
-                            <tr><td class="py-1">Jumlah peserta yang hadir</td><td>:</td><td><span data-ba="hadir">......</span> siswa</td></tr>
+                            <tr><td class="w-[42%] py-1">Pada Sekolah</td><td class="w-6">:</td><td data-ba="sekolah" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
+                            <tr><td class="py-1">Ruang</td><td>:</td><td data-ba="ruang" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
+                            <tr><td class="py-1">Jumlah peserta seharusnya</td><td>:</td><td><span data-ba="jumlah" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1">Nomor peserta</td><td>:</td><td data-ba="nomor" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
+                            <tr><td class="py-1">Jumlah peserta yang tidak hadir</td><td>:</td><td><span data-ba="tidak-hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1">Nomor peserta tidak hadir</td><td>:</td><td data-ba="nomor-tidak" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
+                            <tr><td class="py-1">Jumlah peserta yang hadir</td><td>:</td><td><span data-ba="hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
                         </tbody>
                     </table>
                     <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (SAS) dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
                     <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (SAS) berlangsung:</p>
                     <div id="ba-catatan-preview" class="mb-5">
                         <div id="ba-catatan-text" class="whitespace-pre-wrap min-h-[5mm]"></div>
-                        <div class="mt-2 space-y-2" aria-hidden="true">
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
-                            <div class="w-full h-[5mm] border-b border-dotted border-black"></div>
+                        <div class="ba-catatan-dotted-lines" aria-hidden="true">
+                            <div>..............................................................................................................................................................................</div>
+                            <div>..............................................................................................................................................................................</div>
+                            <div>..............................................................................................................................................................................</div>
+                            <div>..............................................................................................................................................................................</div>
+                            <div>..............................................................................................................................................................................</div>
+                            <div>..............................................................................................................................................................................</div>
                         </div>
                     </div>
                     <p class="mb-10">Berita acara ini dibuat dengan sesungguhnya.</p>
@@ -5120,12 +5120,28 @@
 <style>
 .ba-field{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:#fff}
 #tab-berita-acara label{font-weight:600;color:#334155;font-size:12px}
+/* Ukuran kolom dan garis titik dibuat tetap agar tampilan layar dan hasil cetak sama. */
+#ba-print-area table{width:100%;table-layout:fixed;border-collapse:collapse}
+#ba-print-area table td{vertical-align:top;padding-top:2px;padding-bottom:2px}
+#ba-print-area table td:nth-child(1){width:42%}
+#ba-print-area table td:nth-child(2){width:6%;white-space:nowrap}
+#ba-print-area table td:nth-child(3){width:52%;font-family:monospace;font-size:8pt;font-weight:400;white-space:nowrap;overflow:hidden}
+#ba-print-area table td:nth-child(3) [data-ba]{white-space:nowrap;display:block;font-weight:400}
+#ba-print-area table td:nth-child(3) span[data-ba]{display:inline}
+.ba-catatan-dotted-lines{margin-top:0.5mm;line-height:5mm;font-family:monospace;font-size:8pt;font-weight:400;white-space:nowrap;overflow:hidden}
+.ba-catatan-dotted-lines>div{height:5mm;line-height:5mm;white-space:nowrap;overflow:hidden;font-weight:400}
 @media print{
  @page{size:A4 portrait;margin:15mm}
  body.ba-printing *{visibility:hidden!important}
  body.ba-printing #ba-print-area,body.ba-printing #ba-print-area *{visibility:visible!important}
  body.ba-printing #ba-print-area{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;padding:0;border:0;box-shadow:none}
  body.ba-printing #ba-kop img{width:22mm;height:22mm}
+ body.ba-printing #ba-print-area table{width:100%;table-layout:fixed}
+ body.ba-printing #ba-print-area table td:nth-child(1){width:42%}
+ body.ba-printing #ba-print-area table td:nth-child(2){width:6%}
+ body.ba-printing #ba-print-area table td:nth-child(3){width:52%;font-family:monospace;font-size:8pt;font-weight:400;white-space:nowrap;overflow:hidden}
+ body.ba-printing #ba-print-area .ba-catatan-dotted-lines{font-family:monospace;font-size:8pt;font-weight:400;line-height:5mm;margin-top:0.5mm}
+ body.ba-printing #ba-print-area .ba-catatan-dotted-lines>div{height:5mm;line-height:5mm;font-weight:400}
 }
 </style>
 <script>
