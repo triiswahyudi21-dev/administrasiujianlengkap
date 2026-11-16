@@ -425,6 +425,88 @@
             #tab-mel-asas .mel-asas-paper .mel-signature-stamp { width:33mm !important; height:33mm !important; left:-3mm !important; top:-4mm !important; }
             #tab-mel-asas .mel-asas-paper .mel-signature-ttd { width:40mm !important; height:18mm !important; left:8mm !important; top:2.5mm !important; }
         }
+
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table,
+        #tab-jadwal-pengawas-asas .jadwal-guru-table { border-collapse: collapse; width: 100%; }
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table { min-width: 1120px; font-family: 'Times New Roman', Times, serif; }
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table th,
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table td,
+        #tab-jadwal-pengawas-asas .jadwal-guru-table td { border: 1px solid #334155; padding: 6px 7px; text-align: center; }
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table th { background: #e2e8f0; font-weight: 700; white-space: nowrap; }
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table td { white-space: nowrap; }
+        #tab-jadwal-pengawas-asas .jadwal-pengawas-table td:first-child { font-weight: 600; }
+        #tab-jadwal-pengawas-asas .jadwal-guru-table { font-family: 'Times New Roman', Times, serif; font-size: 12px; }
+        #tab-jadwal-pengawas-asas .jadwal-guru-table td:nth-child(1),
+        #tab-jadwal-pengawas-asas .jadwal-guru-table td:nth-child(3) { font-weight: 700; width: 28px; }
+        #tab-jadwal-pengawas-asas .jadwal-guru-table td:nth-child(2),
+        #tab-jadwal-pengawas-asas .jadwal-guru-table td:nth-child(4) { text-align: left; }
+        @media print {
+            @page { size: A3 landscape; margin: 8mm; }
+            body.jadwal-pengawas-asas-printing * { visibility: hidden !important; }
+            body.jadwal-pengawas-asas-printing #jadwal-pengawas-asas-print-area,
+            body.jadwal-pengawas-asas-printing #jadwal-pengawas-asas-print-area * { visibility: visible !important; }
+            body.jadwal-pengawas-asas-printing #jadwal-pengawas-asas-print-area { position: absolute; left: 0; top: 0; width: 100%; }
+            #jadwal-pengawas-asas-print-area .jadwal-pengawas-table { min-width: 0 !important; width: 100% !important; }
+            #jadwal-pengawas-asas-print-area .jadwal-pengawas-table th,
+            #jadwal-pengawas-asas-print-area .jadwal-pengawas-table td { padding: 4px 5px !important; font-size: 9pt !important; border: 1px solid #000 !important; }
+            #jadwal-pengawas-asas-print-area .jadwal-guru-table td { padding: 3px 5px !important; font-size: 9pt !important; border: 1px solid #000 !important; }
+            #jadwal-pengawas-asas-print-area .overflow-x-auto { overflow: visible !important; }
+        }
+        /* Penyelarasan seluruh blok tanda tangan Kepala Sekolah rata tengah */
+        .principal-signature, .invigilator-sign { text-align: center !important; }
+        .principal-signature .signature-image-wrap { display:flex; justify-content:center !important; }
+        #tab-mel-asas .mel-asas-paper .mel-signature { justify-content:center !important; text-align:center !important; }
+        #tab-mel-asas .mel-asas-paper .mel-signature > div { text-align:center !important; margin-left:auto; margin-right:auto; }
+        #tab-mel-asas .mel-asas-paper .mel-signature-mark { display:flex; justify-content:center; align-items:center; }
+        #tab-mel-asas .mel-asas-paper .mel-signature-stamp { left:50% !important; transform:translateX(-50%); }
+        #tab-mel-asas .mel-asas-paper .mel-signature-ttd { left:50% !important; transform:translateX(-50%); }
+
+        /* Geser blok tanda tangan sedikit ke kanan, tanpa mengubah perataan teks */
+        .w-full.text-center.flex.flex-col.justify-between.items-center {
+            position: relative;
+            left: 8mm;
+        }
+        #tab-mel-asas .mel-asas-paper .mel-signature {
+            position: relative;
+            left: 8mm;
+        }
+        .invigilator-sign {
+            position: relative;
+            left: 8mm;
+        }
+
+        /* Posisi blok tanda tangan di sisi kanan, tetapi seluruh isi tetap rata tengah */
+        .principal-signature-block {
+            width: 72mm;
+            max-width: 100%;
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            text-align: center !important;
+        }
+        .w-full.text-center.flex.flex-col.justify-between.items-center {
+            width: 72mm !important;
+            max-width: 100%;
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            left: 0 !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        #tab-mel-asas .mel-asas-paper .mel-signature {
+            width: 72mm;
+            max-width: 100%;
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            left: 0 !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+        .invigilator-sign {
+            margin-left: auto !important;
+            margin-right: 0 !important;
+            left: 0 !important;
+            text-align: center !important;
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
@@ -455,38 +537,41 @@
                 <button onclick="switchTab('tab-jadwal-asas')" id="nav-tab-jadwal-asas" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
                     <i class="fa-solid fa-calendar-days"></i> <span>2. Jadwal ASAS</span>
                 </button>
+                <button onclick="switchTab('tab-jadwal-pengawas-asas')" id="nav-tab-jadwal-pengawas-asas" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
+                    <i class="fa-solid fa-user-clock"></i> <span>4. Jadwal Pengawas ASAS</span>
+                </button>
                 <button onclick="switchTab('tab-students')" id="nav-tab-students" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-users"></i> <span>3. Data Siswa</span>
+                    <i class="fa-solid fa-users"></i> <span>4. Data Siswa</span>
                 </button>
                 <button onclick="switchTab('tab-room-inventory')" id="nav-tab-room-inventory" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-chair"></i> <span>4. Ruang & Bangku</span>
+                    <i class="fa-solid fa-chair"></i> <span>5. Ruang & Bangku</span>
                 </button>
                 <button onclick="switchTab('tab-shuffle')" id="nav-tab-shuffle" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-layer-group"></i> <span>5. Pemetaan Ruang</span>
+                    <i class="fa-solid fa-layer-group"></i> <span>6. Pemetaan Ruang</span>
                 </button>
                 <button onclick="switchTab('tab-preview-recap')" id="nav-tab-preview-recap" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-square-poll-vertical"></i> <span>6. Rekapitulasi</span>
+                    <i class="fa-solid fa-square-poll-vertical"></i> <span>7. Rekapitulasi</span>
                 </button>
                 <button onclick="switchTab('tab-preview-roster')" id="nav-tab-preview-roster" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-clipboard-user"></i> <span>7. Peserta Ruang</span>
+                    <i class="fa-solid fa-clipboard-user"></i> <span>8. Peserta Ruang</span>
                 </button>
                 <button onclick="switchTab('tab-preview-attendance')" id="nav-tab-preview-attendance" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-file-pen"></i> <span>8. Daftar Hadir</span>
+                    <i class="fa-solid fa-file-pen"></i> <span>9. Daftar Hadir</span>
                 </button>
                 <button onclick="switchTab('tab-preview-cards')" id="nav-tab-preview-cards" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-id-badge"></i> <span>9. Kartu Ujian</span>
+                    <i class="fa-solid fa-id-badge"></i> <span>10. Kartu Ujian</span>
                 </button>
                 <button onclick="switchTab('tab-preview-desk')" id="nav-tab-preview-desk" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-ticket-simple"></i> <span>10. Nomor Bangku</span>
+                    <i class="fa-solid fa-ticket-simple"></i> <span>11. Nomor Bangku</span>
                 </button>
                 <button onclick="switchTab('tab-preview-seating')" id="nav-tab-preview-seating" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-table-cells"></i> <span>11. Denah Bangku</span>
+                    <i class="fa-solid fa-table-cells"></i> <span>12. Denah Bangku</span>
                 </button>
                 <button type="button" onclick="openMelAsasMenu()" id="nav-tab-mel-asas" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-clipboard-check"></i> <span>12. MEL ASAS</span>
+                    <i class="fa-solid fa-clipboard-check"></i> <span>13. MEL ASAS</span>
                 </button>
                 <button onclick="switchTab('tab-preview-invigilators')" id="nav-tab-preview-invigilators" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
-                    <i class="fa-solid fa-user-tie"></i> <span>13. Pengawas Ruang</span>
+                    <i class="fa-solid fa-user-tie"></i> <span>14. Pengawas Ruang</span>
                 </button>
                 <button onclick="switchTab('tab-berita-acara')" id="nav-tab-berita-acara" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
                     <i class="fa-solid fa-file-signature"></i> <span>14. Berita Acara</span>
@@ -566,18 +651,6 @@
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">NIP Kepala Sekolah</label>
                         <input type="text" id="cfg-nip" value="196712061997031003" onchange="saveHeaderConfigToCloud()" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Jabatan TTD Kiri Roster</label>
-                        <input type="text" id="cfg-committee" value="Ketua Panitia ASAS Ganjil" onchange="saveHeaderConfigToCloud()" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Ketua Panitia</label>
-                        <input type="text" id="cfg-committee-name" placeholder="Masukkan Nama Ketua Panitia..." onchange="saveHeaderConfigToCloud()" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">NIP Ketua Panitia</label>
-                        <input type="text" id="cfg-committee-nip" placeholder="Masukkan NIP Ketua Panitia..." onchange="saveHeaderConfigToCloud()" class="w-full text-xs p-2.5 border rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none">
                     </div>
                 </div>
 
@@ -664,28 +737,6 @@
                             <button onclick="resetSignature()" class="text-xs text-red-600 px-1 py-1">Reset</button>
                         </div>
                     </div>
-
-                    <!-- Tanda Tangan Ketua Panitia Transparan -->
-                    <div class="flex items-center justify-between p-3 bg-slate-50 border rounded-xl">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 border rounded-lg bg-white flex items-center justify-center overflow-hidden p-0.5">
-                                <i id="default-committee-signature-icon" class="fa-solid fa-signature text-slate-400 text-xl"></i>
-                                <img id="custom-committee-signature-img" class="w-full h-full object-contain hidden thick-sig-filter" alt="Tanda Tangan Ketua Panitia">
-                            </div>
-                            <div>
-                                <span class="block text-xs font-bold text-slate-800">TTD Ketua Panitia</span>
-                                <span class="text-[10px] text-slate-500">PNG Transparan</span>
-                            </div>
-                        </div>
-                        <div class="flex gap-1">
-                            <label class="cursor-pointer bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-2 py-1 rounded transition">
-                                Unggah
-                                <input type="file" id="committee-signature-input" accept="image/*" class="hidden" onchange="handleCommitteeSignatureUpload(event)">
-                            </label>
-                            <button onclick="resetCommitteeSignature()" class="text-xs text-red-600 px-1 py-1">Reset</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -728,6 +779,72 @@
                             </thead>
                             <tbody id="jadwal-asas-tbody"></tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: JADWAL PENGAWAS ASAS -->
+        <section id="tab-jadwal-pengawas-asas" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-4 mb-5">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-user-clock text-cyan-700"></i> Jadwal Pengawas ASAS
+                        </h2>
+                        <p class="text-sm text-slate-500 mt-1">Dokumen jadwal pengawas ruang ASAS.</p>
+                    </div>
+                    <button type="button" onclick="printJadwalPengawasAsas()" class="no-print px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold">
+                        <i class="fa-solid fa-print mr-1"></i> Cetak Jadwal
+                    </button>
+                </div>
+                <div id="jadwal-pengawas-asas-print-area" class="jadwal-pengawas-paper text-left">
+                    <div class="text-center mb-4">
+                        <h3 class="text-lg font-bold">JADWAL PENGAWAS RUANG</h3>
+                        <p class="font-bold">ASESMEN SUMATIF AKHIR SEMESTER GANJIL TAHUN AJARAN 2026/2027</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="jadwal-pengawas-table">
+                            <thead><tr>
+                                <th>HARI / TANGGAL</th><th>JAM KE-</th><th>JAM</th><th>MATA PELAJARAN</th>
+                                <th>R.1</th><th>R.2</th><th>R.3</th><th>R.4</th><th>R.5</th><th>R.6</th><th>R.7</th><th>R.8</th><th>R.9</th><th>R.10</th><th>R.11</th><th>R.12</th><th>PIKET</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr><td rowspan="2">Selasa, 01 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>Bahasa Indonesia</td><td>P</td><td>B</td><td>R</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>S</td><td>I</td><td>L</td><td>N</td><td>J, M</td></tr>
+                                <tr><td>2</td><td>09.30 - 11.00</td><td>Pendidikan Agama</td><td>O</td><td>P</td><td>Q</td><td>S</td><td>T</td><td>K</td><td>M</td><td>A</td><td>B</td><td>I</td><td>C</td><td>F</td><td>D, R</td></tr>
+                                <tr><td rowspan="2">Rabu, 02 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>Matematika</td><td>G</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>B</td><td>S</td><td>T</td><td>H, I</td></tr>
+                                <tr><td>2</td><td>09.30 - 11.00</td><td>PJOK</td><td>H</td><td>I</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>N</td><td>O</td><td>K</td><td>S</td><td>K, T</td></tr>
+                                <tr><td rowspan="2">Kamis, 03 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>Bahasa Inggris</td><td>N</td><td>O</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>M</td><td>L, P</td></tr>
+                                <tr><td>2</td><td>09.30 - 11.00</td><td>Seni Budaya</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>T</td><td>M</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>N, C</td></tr>
+                                <tr><td>Jumat, 04 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>IPS</td><td>S</td><td>T</td><td>P</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>A, B</td></tr>
+                                <tr><td rowspan="2">Senin, 07 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>IPA</td><td>M</td><td>N</td><td>G</td><td>Q</td><td>R</td><td>H</td><td>T</td><td>A</td><td>K</td><td>C</td><td>D</td><td>E</td><td>F, O</td></tr>
+                                <tr><td>2</td><td>09.30 - 11.00</td><td>Informatika</td><td>C</td><td>H</td><td>A</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>R</td><td>Q</td><td>G</td><td>S, T</td></tr>
+                                <tr><td rowspan="2">Selasa, 08 Desember 2026</td><td>1</td><td>07.00 - 09.00</td><td>PPKn</td><td>A</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>I</td><td>J</td><td>B</td><td>L</td><td>M</td><td>R</td><td>H, C</td></tr>
+                                <tr><td>2</td><td>09.30 - 11.00</td><td>Bahasa Daerah</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>T</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>S, G</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 items-start">
+                        <div>
+                            <h4 class="text-center font-bold mb-1">DAFTAR GURU</h4>
+                            <table class="jadwal-guru-table"><tbody>
+                                <tr><td>A</td><td>Dra. Suprihatin</td><td>K</td><td>Gilang Eko, S.Pd.</td></tr>
+                                <tr><td>B</td><td>Tri Joko, S.Pd.</td><td>L</td><td>Yulis Dili Darwanti, S.Pd.</td></tr>
+                                <tr><td>C</td><td>Retno Manik Adi, S.Pd.</td><td>M</td><td>Ireke Aristia Santoso, S.Pd.</td></tr>
+                                <tr><td>D</td><td>Sanhaji, S.Ag.</td><td>N</td><td>Fadrizal Merdhianto, S.Pd.</td></tr>
+                                <tr><td>E</td><td>Surahman, S.Pd.</td><td>O</td><td>Bayu Setiadji, S.Pd., Gr.</td></tr>
+                                <tr><td>F</td><td>Mega Prasetyawati, S.Pd.</td><td>P</td><td>Faridatul Jannah, S.Pd.</td></tr>
+                                <tr><td>G</td><td>Supriyadi, S.Pd.</td><td>Q</td><td>Ummi Salamah Putri Utami, S.Pd.</td></tr>
+                                <tr><td>H</td><td>Dwi Safiyatin, S.Pd.</td><td>R</td><td>Ahmad Fadholi, S.Pd.</td></tr>
+                                <tr><td>I</td><td>Puji Waluyo, S.Pd.</td><td>S</td><td>Agustin Mahartika, S.E.</td></tr>
+                                <tr><td>J</td><td>Lilin Haryani, S.Pd.</td><td>T</td><td>Sheila Merry Anggraeni, S.Pd.</td></tr>
+                            </tbody></table>
+                        </div>
+                        <div class="text-center mt-8 md:mt-10 principal-signature-block">
+                            <p>Mengetahui,</p><p>Kepala SMP Negeri 3 Besuki</p>
+                            <div class="h-16"></div>
+                            <p class="font-bold underline">Drs. Tubias Soegiarto</p><p>NIP. 196712051997031003</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1256,7 +1373,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-900 text-sm">Daftar Hadir Pengawas Ruang</h3>
-                        <p class="text-xs text-slate-500">Nama dan NIP pengawas diisi manual pada lembar cetak. Hari, tanggal, jam ke-, jam pelaksanaan, dan mata pelajaran mengikuti Jadwal ASAS.</p>
+                        <p class="text-xs text-slate-500">Kode guru, nama guru, dan ruang terisi otomatis sesuai hari/tanggal serta sesi pada Jadwal Pengawas ASAS. NIP dan tanda tangan diisi manual.</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
@@ -1275,7 +1392,7 @@
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 no-print">
                 <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-4 mb-4">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-file-signature text-cyan-700 mr-2"></i>Berita Acara Pelaksanaan ASAS</h2>
+                        <h2 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-file-signature text-cyan-700 mr-2"></i>BERITA ACARA PELAKSANAAN ASESMEN SUMATIF AKHIR SEMESTER (ASAS)</h2>
                         <p class="text-sm text-slate-500 mt-1">Isi seluruh bagian secara manual. Kop mengikuti pengaturan pada menu Identitas.</p>
                     </div>
                     <div class="flex gap-2">
@@ -1292,11 +1409,11 @@
                     <label>Waktu selesai <input id="ba-selesai" class="ba-field" placeholder="........"></label>
                     <label class="md:col-span-2">Pada sekolah <input id="ba-sekolah" type="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
                     <label>Ruang <input id="ba-ruang" class="ba-field" placeholder="........................"></label>
-                    <label>Jumlah peserta seharusnya (siswa) <input id="ba-jumlah" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
-                    <label>Nomor peserta dari - sampai <input id="ba-nomor" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
-                    <label>Jumlah peserta tidak hadir (siswa) <input id="ba-tidak-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah Peserta Yang Hadir <input id="ba-jumlah" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Nomor Peserta Yang Hadir <input id="ba-nomor" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah Peserta Yang Tidak Hadir <input id="ba-tidak-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
                     <label class="md:col-span-2">Nomor peserta tidak hadir <input id="ba-nomor-tidak" type="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
-                    <label>Jumlah peserta hadir (siswa) <input id="ba-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
+                    <label>Jumlah Peserta Yang Hadir <input id="ba-hadir" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
                     <label>Mata pelajaran <input id="ba-mapel" class="ba-field" placeholder="................................"></label>
                     <label>Kode soal <input id="ba-kode" class="ba-field" placeholder="................................"></label>
                     <label>Jumlah lembar soal (eksemplar) <input id="ba-soal" type="text" inputmode="text" class="ba-field" placeholder=".............................................................................................................................................................................."></label>
@@ -1319,24 +1436,23 @@
                     </div>
                     <img id="ba-logo-kanan" class="w-20 h-20 object-contain" alt="Logo sekolah">
                 </div>
-                <div class="text-center font-bold text-base leading-snug mb-1">BERITA ACARA PELAKSANAAN<br>ASESMEN SUMATIF AKHIR SEMESTER (SAS) <span id="ba-semester-preview">GANJIL</span></div>
+                <div class="text-center font-bold text-base leading-snug mb-1">BERITA ACARA PELAKSANAAN<br>ASESMEN SUMATIF AKHIR SEMESTER (ASAS) <span id="ba-semester-preview">GANJIL</span></div>
                 <div class="text-center font-bold mb-6">TAHUN AJARAN <span id="ba-tapel-preview">2026/2027</span></div>
                 <div class="text-justify text-[12pt] leading-relaxed">
                     <p class="mb-4">Pada hari ini <span data-ba="hari">........................</span> tanggal <span data-ba="tanggal">........................</span> bulan <span data-ba="bulan">........................</span> tahun <span data-ba="tahun">........................</span>.</p>
-                    <p class="mb-2">a. Telah diselenggarakan Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span>, dengan keterangan sebagai berikut:</p>
+                    <p class="mb-2">a. Telah diselenggarakan Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span>, dengan keterangan sebagai berikut:</p>
                     <table class="w-full text-[12pt] mb-4" style="border-collapse:collapse">
                         <tbody>
                             <tr><td class="w-[42%] py-1">Pada Sekolah</td><td class="w-6">:</td><td data-ba="sekolah" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
                             <tr><td class="py-1">Ruang</td><td>:</td><td data-ba="ruang" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
-                            <tr><td class="py-1">Jumlah peserta seharusnya</td><td>:</td><td><span data-ba="jumlah" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
-                            <tr><td class="py-1">Nomor peserta</td><td>:</td><td data-ba="nomor" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
-                            <tr><td class="py-1">Jumlah peserta yang tidak hadir</td><td>:</td><td><span data-ba="tidak-hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
-                            <tr><td class="py-1">Nomor peserta tidak hadir</td><td>:</td><td data-ba="nomor-tidak" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
-                            <tr><td class="py-1">Jumlah peserta yang hadir</td><td>:</td><td><span data-ba="hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1">Jumlah Peserta Yang Hadir</td><td>:</td><td><span data-ba="hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1">Nomor Peserta Yang Hadir</td><td>:</td><td data-ba="nomor" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
+                            <tr><td class="py-1">Jumlah Peserta Yang Tidak Hadir</td><td>:</td><td><span data-ba="tidak-hadir" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1">Nomor Peserta Tidak Hadir</td><td>:</td><td data-ba="nomor-tidak" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</td></tr>
                         </tbody>
                     </table>
-                    <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (SAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (SAS) dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
-                    <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (SAS) berlangsung:</p>
+                    <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-room">Ganjil</span> dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
+                    <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-c">Ganjil</span>:</p>
                     <div id="ba-catatan-preview" class="mb-5">
                         <div id="ba-catatan-text" class="whitespace-pre-wrap min-h-[5mm]"></div>
                         <div class="ba-catatan-dotted-lines" aria-hidden="true">
@@ -1656,9 +1772,9 @@
                     if (cfg.date) document.getElementById('cfg-date').value = cfg.date;
                     if (cfg.principal) document.getElementById('cfg-principal').value = cfg.principal;
                     if (cfg.nip) document.getElementById('cfg-nip').value = cfg.nip;
-                    if (cfg.committee) document.getElementById('cfg-committee').value = cfg.committee;
-                    if (cfg.committeeName !== undefined) document.getElementById('cfg-committee-name').value = cfg.committeeName;
-                    if (cfg.committeeNip !== undefined) document.getElementById('cfg-committee-nip').value = cfg.committeeNip;
+                    if (cfg.committee && document.getElementById('cfg-committee')) document.getElementById('cfg-committee').value = cfg.committee;
+                    if (cfg.committeeName !== undefined && document.getElementById('cfg-committee-name')) document.getElementById('cfg-committee-name').value = cfg.committeeName;
+                    if (cfg.committeeNip !== undefined && document.getElementById('cfg-committee-nip')) document.getElementById('cfg-committee-nip').value = cfg.committeeNip;
                 }
             } catch (e) {}
 
@@ -1812,9 +1928,9 @@
                     if (cfg.date) document.getElementById('cfg-date').value = cfg.date;
                     if (cfg.principal) document.getElementById('cfg-principal').value = cfg.principal;
                     if (cfg.nip) document.getElementById('cfg-nip').value = cfg.nip;
-                    if (cfg.committee) document.getElementById('cfg-committee').value = cfg.committee;
-                    if (cfg.committeeName !== undefined) document.getElementById('cfg-committee-name').value = cfg.committeeName;
-                    if (cfg.committeeNip !== undefined) document.getElementById('cfg-committee-nip').value = cfg.committeeNip;
+                    if (cfg.committee && document.getElementById('cfg-committee')) document.getElementById('cfg-committee').value = cfg.committee;
+                    if (cfg.committeeName !== undefined && document.getElementById('cfg-committee-name')) document.getElementById('cfg-committee-name').value = cfg.committeeName;
+                    if (cfg.committeeNip !== undefined && document.getElementById('cfg-committee-nip')) document.getElementById('cfg-committee-nip').value = cfg.committeeNip;
                 }
             });
 
@@ -2887,26 +3003,14 @@
                         </table>
 
                         <div class="flex items-start justify-between pt-2 text-[12pt] font-serif break-inside-avoid">
-                            <div class="w-1/2 text-center flex flex-col justify-between">
-                                <div>
-                                    <p class="mb-0.5">Mengetahui,</p>
-                                    <p class="font-bold">${cfg.committee}</p>
-                                </div>
-                                <div class="h-24 relative flex items-center justify-center my-1">
-                                    ${customCommitteeSignatureBase64 ? `<img src="${customCommitteeSignatureBase64}" class="h-24 w-auto object-contain opacity-90 relative z-10 pointer-events-none thick-sig-filter" alt="TTD Ketua Panitia">` : ''}
-                                </div>
-                                <div>
-                                    <p class="relative z-30 font-bold underline text-[12pt]">${cfg.committeeName ? escapeHtml(cfg.committeeName) : '( .................................................... )'}</p>
-                                    <p class="relative z-30 text-[11pt] font-bold mt-0.5">NIP. ${cfg.committeeNip ? escapeHtml(cfg.committeeNip) : '-'}</p>
-                                </div>
-                            </div>
-                            <div class="w-1/2 text-center flex flex-col justify-between">
+                            
+                            <div class="w-full text-center flex flex-col justify-between items-center">
                                 <div>
                                     <p class="mb-0.5">${cfg.date}</p>
                                     <p class="font-bold">Kepala Sekolah</p>
                                 </div>
-                                <div class="h-24 relative flex items-center justify-center my-1">
-                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-32 h-32 object-contain opacity-80 absolute left-1/2 -translate-x-[70%] -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
+                                <div class="h-24 w-full relative flex items-center justify-center my-1">
+                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-32 h-32 object-contain opacity-80 absolute left-1/2 -translate-x-1/2 -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
                                     ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-24 w-auto object-contain opacity-95 relative z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
                                 </div>
                                 <div>
@@ -2920,6 +3024,38 @@
             }
         }
 
+
+        function printJadwalPengawasAsas() {
+            const area = document.getElementById('jadwal-pengawas-asas-print-area');
+            if (!area) return;
+            const win = window.open('', '_blank');
+            if (!win) { alert('Izinkan pop-up pada browser untuk mencetak jadwal.'); return; }
+            const styles = `
+                @page { size: A3 landscape; margin: 8mm; }
+                body { font-family: 'Times New Roman', Times, serif; color: #000; margin: 0; }
+                h3, p { margin: 3px 0; }
+                .text-center { text-align: center; }
+                .mb-4 { margin-bottom: 14px; }
+                .mt-5 { margin-top: 18px; }
+                .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+                .items-start { align-items: start; }
+                .jadwal-pengawas-table, .jadwal-guru-table { border-collapse: collapse; width: 100%; }
+                .jadwal-pengawas-table { table-layout: fixed; font-size: 10pt; }
+                th, td { border: 1px solid #000; padding: 5px 4px; text-align: center; }
+                th { background: #e2e8f0; font-weight: bold; }
+                .jadwal-pengawas-table td { white-space: nowrap; }
+                .jadwal-guru-table { font-size: 9pt; }
+                .jadwal-guru-table td { padding: 3px 5px; }
+                .jadwal-guru-table td:nth-child(1), .jadwal-guru-table td:nth-child(3) { font-weight: bold; width: 25px; }
+                .jadwal-guru-table td:nth-child(2), .jadwal-guru-table td:nth-child(4) { text-align: left; }
+                .h-16 { height: 55px; }
+                .font-bold { font-weight: bold; }
+                .underline { text-decoration: underline; }
+                @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+            `;
+            win.document.write(`<!doctype html><html lang="id"><head><meta charset="utf-8"><title>Jadwal Pengawas ASAS</title><style>${styles}</style></head><body>${area.innerHTML}<script>window.onload=function(){window.print();};<\/script></body></html>`);
+            win.document.close();
+        }
 
         // --- JADWAL ASAS ---
         const jadwalAsasContoh = [
@@ -3622,17 +3758,18 @@
                             </div>
 
                             <div class="flex items-end justify-end pt-0.5 border-t border-black font-serif mt-auto relative">
+                                <!-- Blok tanda tangan ditempatkan di sisi kanan kartu; seluruh teks rata tengah seperti menu Peserta Ruang -->
                                 <div class="w-3/5 text-center leading-tight text-black relative flex flex-col items-center justify-center">
                                     <div class="text-[6.5pt] font-semibold relative z-30 text-center">${cfg.date}</div>
                                     <div class="text-[7pt] font-bold relative z-30 text-center">Kepala Sekolah</div>
                                     
-                                    <div class="h-7 w-full relative flex items-center justify-center mx-auto text-center my-0">
-                                        ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-10 w-auto max-w-full object-contain opacity-90 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
-                                        ${customStempelBase64 ? `<img src="${customStempelBase64}" width="400" height="400" class="w-14 h-14 object-contain opacity-85 absolute left-[35%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none thick-stamp-filter" alt="Stempel Basah 400x400">` : ''}
+                                    <div class="h-10 w-full relative my-0 overflow-visible">
+                                        ${customStempelBase64 ? `<img src="${customStempelBase64}" width="400" height="400" class="w-20 h-20 object-contain opacity-85 absolute left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
+                                        ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-10 w-24 object-contain opacity-95 absolute left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
                                     </div>
 
-                                    <div class="relative z-30 font-extrabold underline uppercase text-[8.5pt] text-black leading-tight tracking-tight text-center">${cfg.principal}</div>
-                                    <div class="relative z-30 text-[7pt] font-bold text-black text-center">NIP. ${cfg.nip}</div>
+                                    <div class="relative z-30 font-extrabold underline text-[9pt] text-black leading-tight tracking-tight text-center" style="transform: translateY(-4mm); text-shadow: 0 0 2px #fff, 0 0 3px #fff;">${escapeHtml(cfg.principal.trim())}</div>
+                                    <div class="relative z-30 text-[7.5pt] font-extrabold text-black text-center leading-tight" style="transform: translateY(-4mm); text-shadow: 0 0 2px #fff, 0 0 3px #fff;">NIP. ${escapeHtml(cfg.nip)}</div>
                                 </div>
                             </div>
                         </div>
@@ -3889,26 +4026,14 @@
 
                         <!-- Tanda Tangan Panitia & Kepala Sekolah -->
                         <div class="flex items-start justify-between pt-1 text-[12pt] font-serif break-inside-avoid">
-                            <div class="w-1/2 text-center flex flex-col justify-between">
-                                <div>
-                                    <p class="mb-0.5">Mengetahui,</p>
-                                    <p class="font-bold">${cfg.committee}</p>
-                                </div>
-                                <div class="h-24 relative flex items-center justify-center my-1">
-                                    ${customCommitteeSignatureBase64 ? `<img src="${customCommitteeSignatureBase64}" class="h-24 w-auto object-contain opacity-90 relative z-10 pointer-events-none thick-sig-filter" alt="TTD Ketua Panitia">` : ''}
-                                </div>
-                                <div>
-                                    <p class="relative z-30 font-bold underline text-[12pt]">${cfg.committeeName ? escapeHtml(cfg.committeeName) : '( .................................................... )'}</p>
-                                    <p class="relative z-30 text-[11pt] font-bold mt-0.5">NIP. ${cfg.committeeNip ? escapeHtml(cfg.committeeNip) : '-'}</p>
-                                </div>
-                            </div>
-                            <div class="w-1/2 text-center flex flex-col justify-between">
+                            
+                            <div class="w-full text-center flex flex-col justify-between items-center">
                                 <div>
                                     <p class="mb-0.5">${cfg.date}</p>
                                     <p class="font-bold">Kepala Sekolah</p>
                                 </div>
-                                <div class="h-24 relative flex items-center justify-center my-1">
-                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-32 h-32 object-contain opacity-80 absolute left-1/2 -translate-x-[70%] -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
+                                <div class="h-24 w-full relative flex items-center justify-center my-1">
+                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-32 h-32 object-contain opacity-80 absolute left-1/2 -translate-x-1/2 -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
                                     ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-24 w-auto object-contain opacity-95 relative z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
                                 </div>
                                 <div>
@@ -4005,26 +4130,14 @@
                         </table>
 
                         <div class="flex items-start justify-between pt-2 text-[12pt] font-serif break-inside-avoid">
-                            <div class="w-1/2 text-center flex flex-col justify-between">
-                                <div>
-                                    <p class="mb-0.5">Mengetahui,</p>
-                                    <p class="font-bold">${cfg.committee}</p>
-                                </div>
-                                <div class="h-28 relative flex items-center justify-center my-1">
-                                    ${customCommitteeSignatureBase64 ? `<img src="${customCommitteeSignatureBase64}" class="h-28 w-auto object-contain opacity-90 relative z-10 pointer-events-none thick-sig-filter" alt="TTD Ketua Panitia">` : ''}
-                                </div>
-                                <div>
-                                    <p class="relative z-30 font-bold underline text-[12pt]">${cfg.committeeName ? escapeHtml(cfg.committeeName) : '( .................................................... )'}</p>
-                                    <p class="relative z-30 text-[11pt] font-bold mt-0.5">NIP. ${cfg.committeeNip ? escapeHtml(cfg.committeeNip) : '-'}</p>
-                                </div>
-                            </div>
-                            <div class="w-1/2 text-center flex flex-col justify-between">
+                            
+                            <div class="w-full text-center flex flex-col justify-between items-center">
                                 <div>
                                     <p class="mb-0.5">${cfg.date}</p>
                                     <p class="font-bold">Kepala Sekolah</p>
                                 </div>
-                                <div class="h-28 relative flex items-center justify-center my-1">
-                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-36 h-36 object-contain opacity-80 absolute left-1/2 -translate-x-[70%] -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
+                                <div class="h-28 w-full relative flex items-center justify-center my-1">
+                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-36 h-36 object-contain opacity-80 absolute left-1/2 -translate-x-1/2 -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
                                     ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-28 w-auto object-contain opacity-95 relative z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
                                 </div>
                                 <div>
@@ -4155,26 +4268,14 @@
                     </div>
 
                     <div class="flex items-start justify-between pt-2 text-[12pt] font-serif break-inside-avoid">
-                        <div class="w-1/2 text-center flex flex-col justify-between">
-                            <div>
-                                <p class="mb-0.5">Mengetahui,</p>
-                                <p class="font-bold">${cfg.committee}</p>
-                            </div>
-                            <div class="h-28 relative flex items-center justify-center my-1">
-                                ${customCommitteeSignatureBase64 ? `<img src="${customCommitteeSignatureBase64}" class="h-28 w-auto object-contain opacity-90 relative z-10 pointer-events-none thick-sig-filter" alt="TTD Ketua Panitia">` : ''}
-                            </div>
-                            <div>
-                                <p class="relative z-30 font-bold underline text-[12pt]">${cfg.committeeName ? escapeHtml(cfg.committeeName) : '( .................................................... )'}</p>
-                                <p class="relative z-30 text-[11pt] font-bold mt-0.5">NIP. ${cfg.committeeNip ? escapeHtml(cfg.committeeNip) : '-'}</p>
-                            </div>
-                        </div>
-                        <div class="w-1/2 text-center flex flex-col justify-between">
+                        
+                        <div class="w-full text-center flex flex-col justify-between items-center">
                             <div>
                                 <p class="mb-0.5">${cfg.date}</p>
                                 <p class="font-bold">Kepala Sekolah</p>
                             </div>
-                            <div class="h-28 relative flex items-center justify-center my-1">
-                                ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-36 h-36 object-contain opacity-80 absolute left-1/2 -translate-x-[70%] -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
+                            <div class="h-28 w-full relative flex items-center justify-center my-1">
+                                ${customStempelBase64 ? `<img src="${customStempelBase64}" class="w-36 h-36 object-contain opacity-80 absolute left-1/2 -translate-x-1/2 -top-4 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
                                 ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-28 w-auto object-contain opacity-95 relative z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
                             </div>
                             <div>
@@ -4529,8 +4630,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="flex justify-end mt-3 text-[12pt] mel-signature">
-                        <div class="w-72 text-left">
+                    <div class="flex justify-center mt-3 text-[12pt] mel-signature">
+                        <div class="w-72 text-center">
                             <p class="relative z-20">${escapeHtml(cfg.date || meta.date || '............................')}</p>
                             <p class="relative z-20">Kepala Sekolah</p>
                             <div class="mel-signature-mark relative h-28 w-full">
@@ -4580,7 +4681,33 @@
             `;
         }
 
-        // --- DAFTAR HADIR PENGAWAS RUANG: data waktu terhubung ke Jadwal ASAS ---
+        // --- PEMETAAN PENGAWAS RUANG ASAS: kode guru per hari/tanggal, jam, dan ruang ---
+        // Urutan data mengikuti tabel Jadwal Pengawas ASAS (11 sesi).
+        const pengawasRuangAsas = [
+            ['P','B','R','D','E','F','G','H','S','I','L','N'],
+            ['O','P','Q','S','T','K','M','A','B','I','C','F'],
+            ['G','J','K','L','M','N','O','P','Q','B','S','T'],
+            ['H','I','A','B','C','D','E','F','N','O','K','S'],
+            ['N','O','Q','R','S','T','A','B','C','D','E','M'],
+            ['F','G','H','I','J','K','T','M','O','P','Q','R'],
+            ['S','T','P','D','E','F','G','H','I','J','K','L'],
+            ['M','N','G','Q','R','H','T','A','K','C','D','E'],
+            ['C','H','A','J','K','L','M','N','O','R','Q','G'],
+            ['A','C','D','E','F','G','I','J','B','L','M','R'],
+            ['N','O','P','Q','R','T','A','B','C','D','E','F']
+        ];
+        const dataGuruPengawasAsas = {
+            A:'Dra. Suprihatin', B:'Tri Joko, S.Pd.', C:'Retno Manik Adi, S.Pd.',
+            D:'Sanhaji, S.Ag.', E:'Surahman, S.Pd.', F:'Mega Prasetyawati, S.Pd.',
+            G:'Supriyadi, S.Pd.', H:'Dwi Safiyatin, S.Pd.', I:'Puji Waluyo, S.Pd.',
+            J:'Lilin Haryani, S.Pd.', K:'Gilang Eko, S.Pd.', L:'Yulis Dili Darwanti, S.Pd.',
+            M:'Ireke Aristia Santoso, S.Pd.', N:'Fadrizal Merdhianto, S.Pd.',
+            O:'Bayu Setiadji, S.Pd., Gr.', P:'Faridatul Jannah, S.Pd.',
+            Q:'Ummi Salamah Putri Utami, S.Pd.', R:'Ahmad Fadholi, S.Pd.',
+            S:'Agustin Mahartika, S.E.', T:'Sheila Merry Anggraeni, S.Pd.'
+        };
+
+        // --- DAFTAR HADIR PENGAWAS RUANG: data waktu dan penugasan terhubung ke Jadwal ASAS ---
         function renderInvigilatorAttendance() {
             const container = document.getElementById('invigilator-preview-container');
             const select = document.getElementById('invigilator-schedule-select');
@@ -4599,11 +4726,13 @@
             }
             if (previous !== '' && Number(previous) < schedules.length) select.value = previous;
 
-            const row = schedules[Number(select.value) || 0];
+            const selectedIndex = Number(select.value) || 0;
+            const row = schedules[selectedIndex];
             const cfg = getHeaderConfig();
-            // Jumlah baris daftar hadir mengikuti jumlah ruang ujian yang benar-benar digunakan.
-            const examRooms = typeof getExamRoomsFromInventory === 'function' ? getExamRoomsFromInventory() : [];
-            const roomCount = examRooms.length || (Array.isArray(allocatedRooms) ? allocatedRooms.length : 0) || (Array.isArray(customRoomOverrides) ? customRoomOverrides.length : 0);
+            // Jadwal pengawas ruang memakai 12 ruang pada tabel Jadwal Pengawas ASAS.
+            // Kode dan nama guru otomatis mengikuti sesi yang dipilih.
+            const kodePengawas = pengawasRuangAsas[selectedIndex] || [];
+            const roomCount = 12;
             const logoLeftSrc = customLogoLeftBase64 || getPemkabLogoSvg();
             const logoRightSrc = customLogoRightBase64 || getSchoolLogoSvg();
             const stampSrc = customStempelBase64 || '';
@@ -4630,10 +4759,10 @@
                     .invigilator-table th,.invigilator-table td { border:1px solid #000; padding:2mm 1.5mm; }
                     .invigilator-table th { text-align:center; font-weight:bold; }
                     .invigilator-table td { height:8mm; }
-                    .invigilator-sign { margin:8mm 4mm 0 auto; width:72mm; text-align:center; line-height:1.3; position:relative; min-height:48mm; }
+                    .invigilator-sign { margin:8mm auto 0; width:72mm; text-align:center; line-height:1.3; position:relative; min-height:48mm; }
                     .invigilator-sign .stamp-wrap { height:27mm; position:relative; margin:1mm auto; }
-                    .invigilator-stamp { position:absolute; width:31mm; height:31mm; object-fit:contain; left:50%; top:-3mm; transform:translateX(-50%); opacity:.82; mix-blend-mode:multiply; z-index:1; }
-                    .invigilator-signature { position:absolute; width:38mm; height:18mm; object-fit:contain; left:50%; top:5mm; transform:translateX(-50%); opacity:.95; z-index:2; }
+                    .invigilator-stamp { position:absolute; width:36mm; height:36mm; object-fit:contain; left:50%; transform:translateX(-50%); top:-3mm; opacity:.82; mix-blend-mode:multiply; z-index:1; }
+                    .invigilator-signature { position:absolute; width:38mm; height:18mm; object-fit:contain; left:50%; transform:translateX(-50%); top:5mm; opacity:.95; z-index:2; }
                     @media print { .invigilator-paper { width:100%; min-height:0; margin:0; padding:0; page-break-after:always; } .invigilator-paper:last-child { page-break-after:auto; } }
                 </style>
                 <div class="invigilator-paper page-break">
@@ -4660,13 +4789,18 @@
                     </div>
                     <table class="invigilator-table">
                         <thead><tr>
-                            <th style="width:9%">No.</th>
-                            <th style="width:31%">Nama</th>
-                            <th style="width:22%">NIP.</th>
-                            <th style="width:14%">Ruang</th>
-                            <th style="width:24%">Tanda Tangan</th>
+                            <th style="width:7%">No.</th>
+                            <th style="width:12%">Kode Guru</th>
+                            <th style="width:29%">Nama Guru</th>
+                            <th style="width:18%">NIP.</th>
+                            <th style="width:12%">Ruang</th>
+                            <th style="width:22%">Tanda Tangan</th>
                         </tr></thead>
-                        <tbody>${Array.from({length:roomCount},(_,i)=>`<tr><td style="text-align:center">${i+1}</td><td></td><td></td><td></td><td></td></tr>`).join('')}</tbody>
+                        <tbody>${Array.from({length:roomCount},(_,i)=>{
+                            const kode = kodePengawas[i] || '';
+                            const nama = dataGuruPengawasAsas[kode] || '';
+                            return `<tr><td style="text-align:center">${i+1}</td><td style="text-align:center;font-weight:bold">${escapeHtml(kode)}</td><td>${escapeHtml(nama)}</td><td></td><td style="text-align:center">R.${i+1}</td><td></td></tr>`;
+                        }).join('')}</tbody>
                     </table>
                     <div class="invigilator-sign">
                         <div>${escapeHtml(cfg.date)}</div>
@@ -4827,9 +4961,9 @@
             document.getElementById('cfg-date').value = "Besuki, 1 Desember 2026";
             document.getElementById('cfg-principal').value = "Drs. Tubias Sugiarto";
             document.getElementById('cfg-nip').value = "196712061997031003";
-            document.getElementById('cfg-committee').value = "Ketua Panitia ASAS Ganjil";
-            document.getElementById('cfg-committee-name').value = "";
-            document.getElementById('cfg-committee-nip').value = "";
+            if (document.getElementById('cfg-committee')) document.getElementById('cfg-committee').value = "Ketua Panitia ASAS Ganjil";
+            if (document.getElementById('cfg-committee-name')) document.getElementById('cfg-committee-name').value = "";
+            if (document.getElementById('cfg-committee-nip')) document.getElementById('cfg-committee-nip').value = "";
             saveHeaderConfigToCloud();
             showToast("Pengaturan Kop dikembalikan ke default!");
         }
@@ -5160,7 +5294,8 @@
    document.getElementById('ba-school-name').textContent=cfg('cfg-school');
    document.getElementById('ba-address').textContent=cfg('cfg-address');
    const semester=cfg('cfg-semester')||'Ganjil';
-   ['ba-semester-preview','ba-semester-a','ba-semester-b'].forEach(id=>document.getElementById(id).textContent=semester.toUpperCase());
+   document.getElementById('ba-semester-preview').textContent=semester.toUpperCase();
+   ['ba-semester-a','ba-semester-b','ba-semester-c','ba-semester-room'].forEach(id=>document.getElementById(id).textContent=semester.charAt(0).toUpperCase()+semester.slice(1).toLowerCase());
    document.getElementById('ba-tapel-preview').textContent=cfg('cfg-tapel')||'2026/2027';
    ['left','right'].forEach(side=>{
      const src=document.getElementById('custom-logo-'+side+'-img')?.src;
@@ -5177,6 +5312,197 @@
  document.addEventListener('DOMContentLoaded',update);setTimeout(update,500);
 })();
 </script>
+
+
+<style id="print-layout-quality-fix">
+/* Penyempurnaan hasil cetak: menghindari elemen terpotong, tabel terbelah,
+   serta ukuran halaman yang melampaui area cetak. */
+@media print {
+  @page { margin: 12mm; }
+
+  html, body {
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000 !important;
+    background: #fff !important;
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 11pt !important;
+    line-height: 1.2 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+  }
+
+  header, footer, nav, .no-print,
+  button, input[type="button"], input[type="submit"],
+  .modal-bg, #toast-container {
+    display: none !important;
+  }
+
+  main {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tab-content { display: none !important; }
+  .tab-content:not(.hidden) { display: block !important; }
+
+  .print-area, .jadwal-asas-paper, .jadwal-pengawas-paper,
+  #jadwal-asas-print-area, #jadwal-pengawas-asas-print-area,
+  #ba-print-area {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Setiap lembar tetap mulai pada halaman baru, tetapi tidak dipaksa
+     setinggi kertas sehingga isi tidak terdorong keluar area cetak. */
+  .page-break {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    break-after: page !important;
+    page-break-after: always !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+  .page-break:last-child {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .overflow-x-auto, .overflow-auto, .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.15 !important;
+  }
+  thead { display: table-header-group !important; }
+  tfoot { display: table-footer-group !important; }
+  tr, th, td {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  th, td {
+    overflow-wrap: anywhere;
+    word-break: normal;
+    vertical-align: middle;
+  }
+
+  /* Tabel jadwal dan daftar ruang dibuat fleksibel agar tidak terpotong
+     di sisi kanan; isi panjang boleh turun baris. */
+  .jadwal-asas-table,
+  .jadwal-pengawas-table,
+  .jadwal-guru-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+  }
+  .jadwal-asas-table th, .jadwal-asas-table td,
+  .jadwal-pengawas-table th, .jadwal-pengawas-table td,
+  .jadwal-guru-table th, .jadwal-guru-table td {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    padding: 2mm 1.2mm !important;
+    font-size: 9.5pt !important;
+  }
+
+  .card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4mm 5mm !important;
+    min-width: 0 !important;
+  }
+  .desk-3x4-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 3mm !important;
+    min-width: 0 !important;
+  }
+  .card-grid > *, .desk-3x4-grid > *,
+  .attendance-paper, .invigilator-paper,
+  .principal-signature-block, .principal-signature,
+  .invigilator-sign {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  h1, h2, h3, h4, .mel-heading {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  p, li { orphans: 3; widows: 3; }
+
+  img, svg {
+    max-width: 100% !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  input, select, textarea {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: "Times New Roman", Times, serif !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* MEL ASAS memakai orientasi mendatar; ukuran huruf dijaga tetap
+     terbaca namun kolom tidak melebar keluar kertas. */
+  #tab-mel-asas .mel-asas-paper {
+    width: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  #tab-mel-asas .mel-asas-paper table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    font-size: 10.5pt !important;
+  }
+  #tab-mel-asas .mel-asas-paper th,
+  #tab-mel-asas .mel-asas-paper td {
+    font-size: 10pt !important;
+    line-height: 1.12 !important;
+    padding: 1mm 0.7mm !important;
+    overflow-wrap: anywhere !important;
+  }
+  #tab-mel-asas .mel-asas-paper .mel-room-cell,
+  #tab-mel-asas .mel-asas-paper th.mel-room-col {
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+  }
+
+  #ba-print-area table { table-layout: fixed !important; }
+}
+</style>
 
 </body>
 </html>
