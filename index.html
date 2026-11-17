@@ -507,6 +507,62 @@
             left: 0 !important;
             text-align: center !important;
         }
+
+        /* Logo dan stempel diperbesar 25%; kartu ujian dan denah bangku tidak diubah. */
+        @media print {
+            img[alt^="Logo Pemkab"]:not(#cards-preview-container img):not(#seating-preview-container img),
+            img[alt^="Logo Sekolah"]:not(#cards-preview-container img):not(#seating-preview-container img) {
+                transform: scale(1.25) !important;
+                transform-origin: center center !important;
+            }
+            #attendance-preview-container .attendance-kop img {
+                width: 31.25mm !important;
+                height: 26.25mm !important;
+                object-fit: contain !important;
+                transform: none !important;
+            }
+            #tab-mel-asas .mel-asas-paper .mel-heading img {
+                width: 40mm !important;
+                height: 30mm !important;
+                object-fit: contain !important;
+                transform: none !important;
+            }
+            img[alt^="Stempel"]:not(.mel-signature-stamp):not(#cards-preview-container img):not(#seating-preview-container img) {
+                transform: scale(1.25) !important;
+                transform-origin: center center !important;
+            }
+            #tab-mel-asas .mel-asas-paper .mel-signature-stamp {
+                width: 41.25mm !important;
+                height: 41.25mm !important;
+                left: -8mm !important;
+                top: 1mm !important;
+            }
+
+            /* Kop sedikit diturunkan agar jarak atas lebih lega. */
+            .font-kop { transform: translateY(2mm) !important; }
+
+            /* Stempel berada sedikit ke kiri di bawah tulisan Kepala Sekolah. */
+            img[alt="Stempel Basah"],
+            img[alt="Stempel Kepala Sekolah"] {
+                left: 32% !important;
+                top: 0 !important;
+                transform: translateX(-50%) scale(1.25) !important;
+                transform-origin: center center !important;
+            }
+
+            /* Perbesar tanda tangan Kepala Sekolah agar lebih jelas saat PDF. */
+            img[alt="TTD Kepsek"] {
+                height: 7rem !important;
+                max-width: 75mm !important;
+            }
+            #tab-mel-asas .mel-asas-paper .mel-signature-ttd {
+                width: 48mm !important;
+                height: 22mm !important;
+                left: 6mm !important;
+                top: 2mm !important;
+            }
+        }
+
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
@@ -3762,14 +3818,15 @@
                                 <div class="w-3/5 text-center leading-tight text-black relative flex flex-col items-center justify-center">
                                     <div class="text-[6.5pt] font-semibold relative z-30 text-center">${cfg.date}</div>
                                     <div class="text-[7pt] font-bold relative z-30 text-center">Kepala Sekolah</div>
-                                    
+
                                     <div class="h-10 w-full relative my-0 overflow-visible">
-                                        ${customStempelBase64 ? `<img src="${customStempelBase64}" width="400" height="400" class="w-20 h-20 object-contain opacity-85 absolute left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none thick-stamp-filter" alt="Stempel Basah">` : ''}
-                                        ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-10 w-24 object-contain opacity-95 absolute left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none thick-sig-filter" alt="TTD Kepsek">` : ''}
+                                        ${customSignatureBase64 ? `<img src="${customSignatureBase64}" class="h-9 w-20 max-w-full object-contain opacity-95 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none thick-sig-filter" style="max-height: 10mm; max-width: 32mm;" alt="TTD Kepsek">` : ''}
                                     </div>
 
                                     <div class="relative z-30 font-extrabold underline text-[9pt] text-black leading-tight tracking-tight text-center" style="transform: translateY(-4mm); text-shadow: 0 0 2px #fff, 0 0 3px #fff;">${escapeHtml(cfg.principal.trim())}</div>
                                     <div class="relative z-30 text-[7.5pt] font-extrabold text-black text-center leading-tight" style="transform: translateY(-4mm); text-shadow: 0 0 2px #fff, 0 0 3px #fff;">NIP. ${escapeHtml(cfg.nip)}</div>
+
+                                    ${customStempelBase64 ? `<img src="${customStempelBase64}" width="400" height="400" class="w-18 h-18 object-contain opacity-85 absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none thick-stamp-filter" style="left: 50%; top: 47%; width: 18mm; height: 18mm; max-width: 18mm; max-height: 18mm;" alt="Stempel Basah">` : ''}
                                 </div>
                             </div>
                         </div>
@@ -4940,9 +4997,58 @@
                         .mel-asas-paper .mel-heading img { width: 32mm !important; height: 24mm !important; object-fit: contain !important; }
                         .mel-asas-paper .mel-note-cell { min-width: 0 !important; min-height: 7mm !important; height: 7mm !important; }
                         ` : ''}
+                        @media print {
+                            body:not(.print-no-logo-scale) img[alt^="Logo Pemkab"],
+                            body:not(.print-no-logo-scale) img[alt^="Logo Sekolah"] {
+                                transform: scale(1.25) !important;
+                                transform-origin: center center !important;
+                            }
+                            body:not(.print-no-logo-scale) .attendance-kop img {
+                                width: 31.25mm !important;
+                                height: 26.25mm !important;
+                                object-fit: contain !important;
+                                transform: none !important;
+                            }
+                            body:not(.print-no-logo-scale) .mel-asas-paper .mel-heading img {
+                                width: 40mm !important;
+                                height: 30mm !important;
+                                object-fit: contain !important;
+                                transform: none !important;
+                            }
+                            body:not(.print-no-logo-scale) img[alt^="Stempel"]:not(.mel-signature-stamp) {
+                                transform: scale(1.25) !important;
+                                transform-origin: center center !important;
+                            }
+                            body:not(.print-no-logo-scale) .mel-asas-paper .mel-signature-stamp {
+                                width: 41.25mm !important;
+                                height: 41.25mm !important;
+                                left: -8mm !important;
+                                top: 1mm !important;
+                            }
+                            body:not(.print-no-logo-scale) .font-kop {
+                                transform: translateY(2mm) !important;
+                            }
+                            body:not(.print-no-logo-scale) img[alt="Stempel Basah"],
+                            body:not(.print-no-logo-scale) img[alt="Stempel Kepala Sekolah"] {
+                                left: 32% !important;
+                                top: 0 !important;
+                                transform: translateX(-50%) scale(1.25) !important;
+                                transform-origin: center center !important;
+                            }
+                            body:not(.print-no-logo-scale) img[alt="TTD Kepsek"] {
+                                height: 7rem !important;
+                                max-width: 75mm !important;
+                            }
+                            body:not(.print-no-logo-scale) .mel-asas-paper .mel-signature-ttd {
+                                width: 48mm !important;
+                                height: 22mm !important;
+                                left: 6mm !important;
+                                top: 2mm !important;
+                            }
+                        }
                     </style>
                 </head>
-                <body onload="setTimeout(function(){ window.print(); }, 200);" class="p-4 bg-white font-serif">
+                <body onload="setTimeout(function(){ window.print(); }, 200);" class="p-4 bg-white font-serif ${type === 'cards' || type === 'seating' ? 'print-no-logo-scale' : ''}">
                     ${container.innerHTML}
                 </body>
                 </html>
