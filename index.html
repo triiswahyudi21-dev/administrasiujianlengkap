@@ -2996,8 +2996,8 @@
                             <td class="border border-black py-1.5 px-2 font-bold">${row.participants} Siswa</td>
                             <td class="border border-black py-1.5 px-2">${row.hasLocation ? row.availTables : '-'}</td>
                             <td class="border border-black py-1.5 px-2">${row.hasLocation ? row.availChairs : '-'}</td>
-                            <td class="border border-black py-1.5 px-2 font-bold ${row.lackTables > 0 ? 'text-red-700' : ''}">${row.lackTables > 0 ? `Kurang ${row.lackTables}` : '0'}</td>
-                            <td class="border border-black py-1.5 px-2 font-bold ${row.lackChairs > 0 ? 'text-red-700' : ''}">${row.lackChairs > 0 ? `Kurang ${row.lackChairs}` : '0'}</td>
+                            <td class="border border-black py-1.5 px-2 font-bold ${row.lackTables > 0 ? 'text-red-700' : ''}">${row.lackTables > 0 ? row.lackTables : '0'}</td>
+                            <td class="border border-black py-1.5 px-2 font-bold ${row.lackChairs > 0 ? 'text-red-700' : ''}">${row.lackChairs > 0 ? row.lackChairs : '0'}</td>
                             <td class="border border-black py-1.5 px-2 text-left text-[10.5pt] font-semibold ${row.lackTables > 0 || row.lackChairs > 0 ? 'text-red-700' : ''}">${ketText}</td>
                         </tr>
                     `;
@@ -3049,8 +3049,8 @@
                                     <td class="border border-black py-1.5 px-1">${totalRecapPart} Siswa</td>
                                     <td class="border border-black py-1.5 px-1">${totalRecapTables}</td>
                                     <td class="border border-black py-1.5 px-1">${totalRecapChairs}</td>
-                                    <td class="border border-black py-1.5 px-1 text-red-700">${totalShortTables > 0 ? `Kurang ${totalShortTables}` : '0'}</td>
-                                    <td class="border border-black py-1.5 px-1 text-red-700">${totalShortChairs > 0 ? `Kurang ${totalShortChairs}` : '0'}</td>
+                                    <td class="border border-black py-1.5 px-1 text-red-700">${totalShortTables > 0 ? totalShortTables : '0'}</td>
+                                    <td class="border border-black py-1.5 px-1 text-red-700">${totalShortChairs > 0 ? totalShortChairs : '0'}</td>
                                     <td class="border border-black py-1.5 px-2 text-left text-[10pt]">
                                         ${totalShortTables > 0 || totalShortChairs > 0 ? `Total Kurang ${totalShortTables} Meja & ${totalShortChairs} Kursi` : 'Lengkap / Cukup'}
                                     </td>
