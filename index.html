@@ -616,6 +616,9 @@
                 <button onclick="switchTab('tab-preview-desk')" id="nav-tab-preview-desk" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
                     <i class="fa-solid fa-ticket-simple"></i> <span>11. Nomor Bangku</span>
                 </button>
+                <button onclick="switchTab('tab-room-numbers')" id="nav-tab-room-numbers" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
+                    <i class="fa-solid fa-door-open"></i> <span>12. Nomor Ruang Ujian</span>
+                </button>
                 <button onclick="switchTab('tab-preview-seating')" id="nav-tab-preview-seating" class="px-3 py-2 rounded-lg transition-all text-slate-300 hover:text-white flex items-center gap-1.5 font-medium whitespace-nowrap">
                     <i class="fa-solid fa-table-cells"></i> <span>12. Denah Bangku</span>
                 </button>
@@ -951,6 +954,12 @@
                     </div>
                     <div id="class-stats-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-2 text-center text-xs">
                         <!-- Dynamic class badges -->
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Rekap Jumlah Siswa Per Tingkat (L/P)</h3>
+                        <div id="grade-gender-stats" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                            <!-- Rekap kelas 7, 8, dan 9 diisi otomatis -->
+                        </div>
                     </div>
                 </div>
 
@@ -1333,6 +1342,22 @@
             <div id="desk-preview-container" class="print-area bg-slate-200/60 p-4 sm:p-8 rounded-2xl border border-slate-300 min-h-[600px] overflow-x-auto">
                 <!-- Injected via JS -->
             </div>
+        </section>
+
+        <!-- TAB: NOMOR RUANG UJIAN -->
+        <section id="tab-room-numbers" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 no-print flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-cyan-50 text-cyan-700 rounded-lg"><i class="fa-solid fa-door-open text-xl"></i></div>
+                    <div><h3 class="font-bold text-slate-900 text-sm">Cetak Nomor Ruang Ujian</h3>
+                    <p class="text-xs text-slate-500">Format A4 seperti contoh: kop sekolah, nomor ruang besar, kelas, jumlah peserta, dan rentang nomor peserta.</p></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select id="room-number-filter" onchange="renderRoomNumbersPreview()" class="text-xs p-2 border rounded-lg bg-white"><option value="ALL">Semua Ruangan</option></select>
+                    <button type="button" onclick="triggerPrint('room-numbers')" class="bg-cyan-700 hover:bg-cyan-800 text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow"><i class="fa-solid fa-print mr-1"></i> Cetak Nomor Ruang</button>
+                </div>
+            </div>
+            <div id="room-numbers-preview-container" class="print-area bg-slate-200/60 p-4 sm:p-8 rounded-2xl border border-slate-300 min-h-[600px] overflow-x-auto"></div>
         </section>
 
         <!-- TAB 10: PRATINJAU & CETAK DENAH NOMOR BANGKU PER RUANG -->
@@ -3048,7 +3073,7 @@
                             <tbody>
                                 ${rowsHtml}
                                 <tr class="bg-slate-100 font-bold text-center border-t-2 border-black">
-                                    <td colspan="3" class="border border-black py-1.5 px-2 text-right uppercase">TOTAL KESELURUHAN:</td>
+                                    <td colspan="3" class="border border-black py-1.5 px-2 text-center uppercase">TOTAL KESELURUHAN</td>
                                     <td class="border border-black py-1.5 px-1">${totalRecapOrig} Siswa</td>
                                     <td class="border border-black py-1.5 px-1">${totalRecapPart} Siswa</td>
                                     <td class="border border-black py-1.5 px-1">${totalRecapTables}</td>
@@ -3220,7 +3245,7 @@
             const targetEl = document.getElementById(tabId);
             if (targetEl) targetEl.classList.remove('hidden');
 
-            const tabKeys = ['identitas', 'jadwal-asas', 'students', 'room-inventory', 'shuffle', 'preview-recap', 'preview-roster', 'preview-attendance', 'preview-cards', 'preview-desk', 'preview-seating', 'mel-asas', 'preview-invigilators', 'berita-acara'];
+            const tabKeys = ['identitas', 'jadwal-asas', 'students', 'room-inventory', 'shuffle', 'preview-recap', 'preview-roster', 'preview-attendance', 'preview-cards', 'preview-desk', 'room-numbers', 'preview-seating', 'mel-asas', 'preview-invigilators', 'berita-acara'];
             tabKeys.forEach(t => {
                 const btn = document.getElementById(`nav-tab-${t}`);
                 if (btn) {
@@ -3244,6 +3269,9 @@
             } else if (tabId === 'tab-preview-desk') {
                 populateFilterSelect('desk-room-filter');
                 renderDeskPreview();
+            } else if (tabId === 'tab-room-numbers') {
+                populateFilterSelect('room-number-filter');
+                renderRoomNumbersPreview();
             } else if (tabId === 'tab-preview-roster') {
                 populateFilterSelect('roster-room-filter');
                 renderRosterPreview();
@@ -3392,6 +3420,34 @@
                 `;
             });
             grid.innerHTML = html;
+
+            // Rekap otomatis jumlah siswa laki-laki dan perempuan per tingkat kelas.
+            const gradeStats = document.getElementById('grade-gender-stats');
+            if (gradeStats) {
+                let gradeHtml = '';
+                [7, 8, 9].forEach(grade => {
+                    const gradeStudents = rawStudents.filter(s => String(s.class || '').trim().charAt(0) === String(grade));
+                    const gradeL = gradeStudents.filter(s => normalizeGender(s.gender) === 'L').length;
+                    const gradeP = gradeStudents.filter(s => normalizeGender(s.gender) === 'P').length;
+                    gradeHtml += `
+                        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
+                            <div class="text-sm font-extrabold text-slate-700">KELAS ${grade}</div>
+                            <div class="flex justify-center items-center gap-5 mt-2">
+                                <div>
+                                    <div class="text-[10px] uppercase font-bold text-sky-600">Laki-laki (L)</div>
+                                    <div class="text-2xl font-extrabold text-sky-700">${gradeL}</div>
+                                </div>
+                                <div class="h-9 border-l border-slate-200"></div>
+                                <div>
+                                    <div class="text-[10px] uppercase font-bold text-pink-600">Perempuan (P)</div>
+                                    <div class="text-2xl font-extrabold text-pink-700">${gradeP}</div>
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 mt-1">Total: ${gradeStudents.length} siswa</div>
+                        </div>`;
+                });
+                gradeStats.innerHTML = gradeHtml;
+            }
             renderPairRulesUI();
         }
 
@@ -3927,6 +3983,48 @@
             container.innerHTML = html;
         }
 
+        // --- RENDER NOMOR RUANG UJIAN (FORMAT A4 SESUAI CONTOH) ---
+        function renderRoomNumbersPreview() {
+            const container = document.getElementById('room-numbers-preview-container');
+            if (!container) return;
+            const filter = document.getElementById('room-number-filter')?.value || 'ALL';
+            const cfg = getHeaderConfig();
+            const rooms = (filter === 'ALL' ? allocatedRooms : allocatedRooms.filter(r => r.roomName === filter));
+            if (!rooms.length) { container.innerHTML = getEmptyPreviewHTML('Nomor Ruang Ujian'); return; }
+            const leftLogo = customLogoLeftBase64 || getPemkabLogoSvg();
+            const rightLogo = customLogoRightBase64 || getSchoolLogoSvg();
+            container.innerHTML = rooms.map(room => {
+                const seats = [...(room.seats || [])].sort((a,b) => String(a.examNo || '').localeCompare(String(b.examNo || ''), undefined, {numeric:true}));
+                const byClass = {};
+                seats.forEach(stu => { const cls = stu.class || '-'; (byClass[cls] ||= []).push(stu); });
+                const classLines = Object.entries(byClass).map(([cls, list]) => `<div>${escapeHtml(cls)} = ${list.length} Siswa</div>`).join('');
+                const numberLines = Object.entries(byClass).map(([cls, list]) => {
+                    const nums = list.map(x => String(x.examNo || '')).filter(Boolean).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+                    return `<div>${escapeHtml(cls)} = ${nums.length ? `${escapeHtml(nums[0])} s/d ${escapeHtml(nums[nums.length-1])}` : '-'}</div>`;
+                }).join('');
+                const roomMatch = String(room.roomName || '').match(/(\d+)/);
+                const roomNo = String(roomMatch ? roomMatch[1] : room.roomNum || '').padStart(2,'0');
+                return `<article class="room-number-paper bg-white mx-auto mb-6 border-2 border-black rounded-xl p-6 flex flex-col" style="width:190mm; min-height:277mm; box-sizing:border-box; page-break-after:always;">
+                    <header class="room-number-letterhead flex items-center justify-between gap-4 border-b-4 border-black pb-3">
+                        <img class="room-number-logo" src="${leftLogo}" alt="Logo Pemkab" style="width:22mm;height:24mm;object-fit:contain">
+                        <div class="room-number-letterhead-text text-center flex-1 leading-tight"><div class="room-number-gov font-bold text-lg">${escapeHtml(cfg.gov1)}</div><div class="room-number-school font-bold text-2xl">${escapeHtml(cfg.school)}</div><div class="room-number-address">${escapeHtml(cfg.address)}</div><div class="room-number-contact">laman ${escapeHtml(cfg.website)} · e-mail : ${escapeHtml(cfg.email)}</div></div>
+                        <img class="room-number-logo" src="${rightLogo}" alt="Logo Sekolah" style="width:22mm;height:24mm;object-fit:contain">
+                    </header>
+                    <div class="room-number-title text-center font-bold mt-4 leading-snug uppercase" style="font-size:18pt">${escapeHtml(cfg.examName)}<br>TAHUN PELAJARAN ${escapeHtml(cfg.tapel)}</div>
+                    <div class="room-number-center flex-1 flex items-center justify-center py-8">
+                        <div class="room-number-main-box w-full border-[5px] border-black rounded-2xl bg-slate-50 px-8 py-7 text-center">
+                            <div class="text-4xl font-bold tracking-[0.18em] border-b-2 border-black pb-3">RUANG UJIAN</div>
+                            <div class="font-black leading-none py-5" style="font-size:112pt">${roomNo}</div>
+                        </div>
+                    </div>
+                    <div class="room-number-details border-2 border-black rounded-lg p-4 font-bold leading-snug" style="font-size:20pt">
+                        <div class="grid grid-cols-[62mm_1fr] gap-y-2"><div class="border-t border-slate-300 pt-2">Peserta / Kelas</div><div class="border-t border-slate-300 pt-2">${classLines}</div>
+                        <div class="border-t border-slate-300 pt-2">Nomor Peserta</div><div class="border-t border-slate-300 pt-2">${numberLines}</div></div>
+                    </div>
+                </article>`;
+            }).join('');
+        }
+
         // --- RENDER SEATING PLAN (DENAH NOMOR BANGKU PER RUANG) ---
         function renderSeatingPreview() {
             const container = document.getElementById('seating-preview-container');
@@ -4257,26 +4355,43 @@
             allPresentClasses.forEach(c => classTotals[c] = 0);
 
             let grandTotal = 0;
+            let grandMale = 0;
+            let grandFemale = 0;
 
             let tableRowsHtml = '';
             allocatedRooms.forEach((room, idx) => {
                 const roomClassCounts = {};
                 allPresentClasses.forEach(c => roomClassCounts[c] = 0);
+                let roomMale = 0;
+                let roomFemale = 0;
 
-                room.seats.forEach(s => {
-                    if (roomClassCounts[s.class] !== undefined) {
-                        roomClassCounts[s.class]++;
-                        classTotals[s.class]++;
+                room.seats.forEach(stu => {
+                    if (roomClassCounts[stu.class] !== undefined) {
+                        roomClassCounts[stu.class]++;
+                        classTotals[stu.class]++;
                     }
+                    const gender = String(stu.gender || '').trim().toUpperCase();
+                    if (gender === 'L') roomMale++;
+                    else if (gender === 'P') roomFemale++;
                 });
+
+                const assignedClassrooms = classroomInventory
+                    .filter(item => item.assignedExamRoom === room.roomName)
+                    .map(item => item.roomLabel);
+                const locationText = assignedClassrooms.length > 0 ? assignedClassrooms.join(' + ') : '-';
 
                 const roomTotal = room.seats.length;
                 grandTotal += roomTotal;
+                grandMale += roomMale;
+                grandFemale += roomFemale;
 
                 tableRowsHtml += `
                     <tr class="text-center font-serif">
                         <td class="border border-black py-1.5 px-1 font-mono">${idx + 1}</td>
                         <td class="border border-black py-1.5 px-2 font-bold text-left">${room.roomName}</td>
+                        <td class="border border-black py-1.5 px-2 text-left">${escapeHtml(locationText)}</td>
+                        <td class="border border-black py-1.5 px-1">${roomMale || '-'}</td>
+                        <td class="border border-black py-1.5 px-1">${roomFemale || '-'}</td>
                         ${allPresentClasses.map(c => `
                             <td class="border border-black py-1.5 px-1 ${roomClassCounts[c] > 0 ? 'font-bold' : 'text-slate-400'}">
                                 ${roomClassCounts[c] > 0 ? roomClassCounts[c] : '-'}
@@ -4312,6 +4427,9 @@
                             <tr class="bg-slate-100 text-center font-bold border-b-2 border-black">
                                 <th class="border border-black py-1.5 px-1 w-8">NO</th>
                                 <th class="border border-black py-1.5 px-2 text-center">RUANGAN</th>
+                                <th class="border border-black py-1.5 px-2">LOKASI KELAS</th>
+                                <th class="border border-black py-1.5 px-1">L</th>
+                                <th class="border border-black py-1.5 px-1">P</th>
                                 ${allPresentClasses.map(c => `<th class="border border-black py-1.5 px-1">${c}</th>`).join('')}
                                 <th class="border border-black py-1.5 px-2 bg-slate-200">JUMLAH</th>
                             </tr>
@@ -4319,7 +4437,9 @@
                         <tbody>
                             ${tableRowsHtml}
                             <tr class="bg-slate-100 font-bold text-center border-t-2 border-black">
-                                <td colspan="2" class="border border-black py-1.5 px-2 text-right uppercase">TOTAL KESELURUHAN:</td>
+                                <td colspan="3" class="border border-black py-1.5 px-2 text-center uppercase">TOTAL KESELURUHAN</td>
+                                <td class="border border-black py-1.5 px-1">${grandMale}</td>
+                                <td class="border border-black py-1.5 px-1">${grandFemale}</td>
                                 ${allPresentClasses.map(c => `<td class="border border-black py-1.5 px-1">${classTotals[c]}</td>`).join('')}
                                 <td class="border border-black py-1.5 px-2 bg-slate-200 font-extrabold text-[12pt]">${grandTotal}</td>
                             </tr>
@@ -4737,6 +4857,60 @@
         }
 
         function triggerPrint(mode) {
+            if (mode === 'room-numbers') {
+                if (!allocatedRooms.length) { showToast("Belum ada data ruang. Jalankan pemetaan ruang terlebih dahulu.", "warning"); return; }
+                renderRoomNumbersPreview();
+                document.getElementById('room-numbers-print-root')?.remove();
+                const source = document.getElementById('room-numbers-preview-container');
+                const printRoot = document.createElement('div');
+                printRoot.id = 'room-numbers-print-root';
+                printRoot.innerHTML = source ? source.innerHTML : '';
+                document.body.appendChild(printRoot);
+                const style = document.createElement('style');
+                style.id = 'room-number-print-style';
+                style.textContent = `
+                    #room-numbers-print-root{display:none}
+                    .room-number-paper{width:200mm;height:287mm;box-sizing:border-box;background:#fff;border:1.5px solid #000;margin:0 auto 8mm;padding:7mm;display:flex;flex-direction:column;font-family:'Times New Roman',Times,serif;color:#000;overflow:hidden}
+                    .room-number-letterhead{display:grid;grid-template-columns:25mm minmax(0,1fr) 25mm;align-items:center;column-gap:4mm;width:100%;box-sizing:border-box;border-bottom:4px double #000;padding:0 0 5mm;margin:0 0 5mm;min-height:29mm}
+                    .room-number-logo{display:block;width:24mm;height:24mm;max-width:24mm;object-fit:contain;justify-self:center}
+                    .room-number-letterhead-text{display:block;min-width:0;text-align:center;font-family:'Times New Roman',Times,serif;line-height:1.12;color:#000}
+                    .room-number-gov{font-size:12pt;font-weight:700;text-transform:uppercase}
+                    .room-number-school{font-size:16pt;font-weight:900;text-transform:uppercase}
+                    .room-number-address,.room-number-contact{font-size:9pt;font-weight:400}
+                    .room-number-title{text-align:center;font-size:18pt!important;font-weight:bold;line-height:1.25;text-transform:uppercase;margin-top:5mm}
+                    .room-number-center{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:8mm 0}
+                    .room-number-main-box{width:100%;border:4px solid #000;border-radius:5mm;background:#f8fafc;padding:9mm 8mm;text-align:center}
+                    .room-number-main-label{font-size:30pt;font-weight:bold;letter-spacing:.16em;border-bottom:2px solid #000;padding-bottom:4mm}
+                    .room-number-value{font-size:105pt;font-weight:900;line-height:1;padding:8mm 0 3mm}
+                    .room-number-details{border:1.5px solid #000;border-radius:2mm;padding:6mm;font-size:20pt!important;font-weight:bold;line-height:1.3}
+                    .room-number-detail-grid{display:grid;grid-template-columns:58mm 1fr;column-gap:4mm;row-gap:2mm}
+                    .room-number-detail-divider{border-top:1px solid #888;padding-top:2mm}
+                    @media print{
+                      @page{size:A4 portrait;margin:5mm}
+                      html,body{margin:0!important;padding:0!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+                      body>*:not(#room-numbers-print-root){display:none!important}
+                      #room-numbers-print-root{display:block!important;position:static!important;width:200mm!important;height:auto!important;margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important;box-sizing:border-box!important}
+                      #room-numbers-print-root .room-number-paper{width:200mm!important;height:287mm!important;min-height:287mm!important;margin:0!important;padding:7mm!important;border:1.5px solid #000!important;border-radius:0!important;box-shadow:none!important;break-after:page!important;page-break-after:always!important;box-sizing:border-box!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+                      #room-numbers-print-root .room-number-paper:last-child{break-after:auto!important;page-break-after:auto!important}
+                      /* Override aturan cetak global yang menyembunyikan semua elemen header */
+                      #room-numbers-print-root header{display:grid!important;visibility:visible!important;grid-template-columns:22mm minmax(0,1fr) 22mm!important;align-items:center!important;gap:4mm!important;width:100%!important;box-sizing:border-box!important;border-bottom:4px double #000!important;padding:0 0 5mm!important;margin:5mm 0 5mm!important;}
+                      #room-numbers-print-root header *{display:block!important;visibility:visible!important;color:#000!important;}
+                      #room-numbers-print-root header img{display:block!important;visibility:visible!important;width:22mm!important;height:24mm!important;max-width:22mm!important;object-fit:contain!important;}
+                      #room-numbers-print-root header > div{text-align:center!important;min-width:0!important;line-height:1.15!important;}
+                      #room-numbers-print-root .room-number-title{font-size:18pt!important;line-height:1.25!important;margin-top:5mm!important;}
+                      #room-numbers-print-root .room-number-center{flex:1 1 auto!important;min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+                      #room-numbers-print-root .room-number-main-box{width:100%!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;}
+                      #room-numbers-print-root header > div > div{display:block!important;}
+                      #room-numbers-print-root .room-number-logo{display:block!important;visibility:visible!important}
+                    }`;
+                document.head.appendChild(style);
+                const cleanup = () => { printRoot.remove(); style.remove(); window.removeEventListener('afterprint', cleanup); };
+                window.addEventListener('afterprint', cleanup);
+                const roomImages = [...printRoot.querySelectorAll('img')];
+                Promise.all(roomImages.map(img => img.decode ? img.decode().catch(() => {}) : Promise.resolve()))
+                    .then(() => { window.print(); setTimeout(cleanup, 1800); });
+                return;
+            }
             if (mode === 'mel-asas') {
                 renderMelAsasPreview();
             } else if (mode === 'invigilators') {
@@ -5096,6 +5270,13 @@
             try { localStorage.setItem(melAsasStorageKey, JSON.stringify(melAsasState)); } catch (e) {}
         }
 
+        function getMelAsasSelectedScheduleInfo() {
+            const group = getJadwalAsasScheduleGroups().find(g => g.dayDate === (melAsasState.date || ''));
+            if (!group) return { session: '', time: '' };
+            const item = group.items.find(x => x.subject === (melAsasState.subject || ''));
+            return item ? { session: item.session || '', time: item.time || '' } : { session: '', time: '' };
+        }
+
         function getMelRoomGroups() {
             const sourceRooms = (allocatedRooms && allocatedRooms.length > 0)
                 ? allocatedRooms
@@ -5141,6 +5322,7 @@
             const logoLeftSrc = customLogoLeftBase64 || getPemkabLogoSvg();
             const logoRightSrc = customLogoRightBase64 || getSchoolLogoSvg();
             const groups = getMelRoomGroups();
+            const scheduleInfo = getMelAsasSelectedScheduleInfo();
 
             let totalL = 0, totalP = 0, totalJml = 0;
             let hasMappedCount = false;
@@ -5206,9 +5388,19 @@
                             </div>
                         </div>
                         <div style="display:flex;align-items:baseline;margin-top:2px;">
-                            <span style="display:inline-block;width:30mm;">Mata Pelajaran</span>
-                            <span style="display:inline-block;width:4mm;">:</span>
+                            <span style="display:inline-block;width:30mm;flex:0 0 30mm;">Mata Pelajaran</span>
+                            <span style="display:inline-block;width:4mm;flex:0 0 4mm;text-align:center;">:</span>
                             <span>${escapeHtml(melAsasState.subject || '..................................................')}</span>
+                        </div>
+                        <div style="display:flex;align-items:baseline;margin-top:2px;">
+                            <span style="display:inline-block;width:30mm;flex:0 0 30mm;">Jam Ke</span>
+                            <span style="display:inline-block;width:4mm;flex:0 0 4mm;text-align:center;">:</span>
+                            <span>${escapeHtml(scheduleInfo.session || '................')}</span>
+                        </div>
+                        <div style="display:flex;align-items:baseline;margin-top:2px;">
+                            <span style="display:inline-block;width:30mm;flex:0 0 30mm;">Pukul</span>
+                            <span style="display:inline-block;width:4mm;flex:0 0 4mm;text-align:center;">:</span>
+                            <span>${escapeHtml(scheduleInfo.time || '................')}</span>
                         </div>
                     </div>
 
