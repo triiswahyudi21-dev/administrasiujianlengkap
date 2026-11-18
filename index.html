@@ -161,7 +161,16 @@
                 margin: 0 !important; padding: 8mm !important; border: 0 !important;
                 box-shadow: none !important; border-radius: 0 !important;
             }
-            #attendance-preview-container .attendance-kop img { width: 25mm !important; height: 21mm !important; }
+            #attendance-preview-container .attendance-kop {
+                padding-bottom: 3.5mm !important;
+                margin-bottom: 4mm !important;
+            }
+            #attendance-preview-container .attendance-kop img {
+                width: 24mm !important;
+                height: 20mm !important;
+                object-fit: contain !important;
+                transform: none !important;
+            }
         }
 
         /* Filter Efek Ketebalan & Transparansi Stempel & TTD */
@@ -481,8 +490,8 @@
                 transform-origin: center center !important;
             }
             #attendance-preview-container .attendance-kop img {
-                width: 31.25mm !important;
-                height: 26.25mm !important;
+                width: 24mm !important;
+                height: 20mm !important;
                 object-fit: contain !important;
                 transform: none !important;
             }
@@ -1247,12 +1256,15 @@
                         <i class="fa-solid fa-file-pen text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Pratinjau Daftar Hadir Peserta Ujian (Format Kosongan TTD)</h3>
-                        <p class="text-xs text-slate-500">Format Resmi Daftar Hadir Ujian dengan Kolom Tanda Tangan Zig-zag (Arial/Sans-serif 11pt)</p>
+                        <h3 class="font-bold text-slate-900 text-sm">Pratinjau Daftar Hadir Peserta Ujian (Otomatis Mengikuti Jadwal ASAS)</h3>
+                        <p class="text-xs text-slate-500">Hari/Tanggal, Mata Pelajaran, dan Pukul otomatis mengikuti pilihan Jadwal ASAS</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <select id="attendance-schedule-select" onchange="renderAttendancePreview()" class="text-xs p-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none bg-white font-medium min-w-[230px]" title="Pilih Sesi Jadwal ASAS">
+                        <option value="MANUAL">Kosong / Tulis Manual (........)</option>
+                    </select>
                     <select id="attendance-room-filter" onchange="renderAttendancePreview()" class="text-xs p-2 border rounded-lg focus:ring-2 focus:ring-amber-500 outline-none bg-white font-medium">
                         <option value="ALL">Semua Ruangan</option>
                     </select>
@@ -3145,6 +3157,8 @@
             );
             try { localStorage.setItem('jadwalAsasData_v1', JSON.stringify(rows)); } catch (e) {}
             if (typeof syncMelAsasScheduleOptions === 'function') syncMelAsasScheduleOptions(true);
+            if (typeof populateAttendanceScheduleSelect === 'function') populateAttendanceScheduleSelect(true);
+            if (document.getElementById('tab-preview-attendance') && !document.getElementById('tab-preview-attendance').classList.contains('hidden')) renderAttendancePreview();
             if (document.getElementById('tab-preview-invigilators') && !document.getElementById('tab-preview-invigilators').classList.contains('hidden')) renderInvigilatorAttendance();
         }
         function renderJadwalAsas() {
@@ -3236,18 +3250,11 @@
             } else if (tabId === 'tab-preview-recap') {
                 renderRecapPreview();
             } else if (tabId === 'tab-preview-attendance') {
+                populateAttendanceScheduleSelect(true);
                 populateFilterSelect('attendance-room-filter');
                 renderAttendancePreview();
             } else if (tabId === 'tab-preview-invigilators') {
                 renderInvigilatorAttendance();
-            } else if (tabId === 'tab-preview-seating') {
-                populateFilterSelect('seating-room-filter');
-                renderSeatingPreview();
-            } else if (tabId === 'tab-room-inventory') {
-                renderRoomInventoryUI();
-            } else if (tabId === 'tab-mel-asas') {
-                loadMelAsasMeta();
-                renderMelAsasPreview();
             }
         }
 
@@ -4304,7 +4311,7 @@
                         <thead>
                             <tr class="bg-slate-100 text-center font-bold border-b-2 border-black">
                                 <th class="border border-black py-1.5 px-1 w-8">NO</th>
-                                <th class="border border-black py-1.5 px-2 text-left">RUANGAN</th>
+                                <th class="border border-black py-1.5 px-2 text-center">RUANGAN</th>
                                 ${allPresentClasses.map(c => `<th class="border border-black py-1.5 px-1">${c}</th>`).join('')}
                                 <th class="border border-black py-1.5 px-2 bg-slate-200">JUMLAH</th>
                             </tr>
@@ -4347,10 +4354,82 @@
         }
 
         // --- RENDER ATTENDANCE PREVIEW (FORMAT DAFTAR HADIR PESERTA RESMI) ---
+        function populateAttendanceScheduleSelect(preserveSelection = true) {
+            const select = document.getElementById('attendance-schedule-select');
+            if (!select) return;
+
+            const prevVal = preserveSelection ? select.value : '';
+            const rows = typeof getJadwalAsasData === 'function' ? getJadwalAsasData() : jadwalAsasContoh;
+            const validItems = rows
+                .map((r, idx) => {
+                    const day = (r[0] || '').trim();
+                    const date = (r[1] || '').trim();
+                    const session = (r[2] || '').trim();
+                    const time = (r[3] || '').trim();
+                    const subject = (r[4] || '').trim();
+                    if (!day && !date && !time && !subject) return null;
+                    const dayDate = [day, date].filter(Boolean).join(', ');
+                    const labelParts = [dayDate];
+                    if (session) labelParts.push(`Jam ke-${session}`);
+                    if (subject) labelParts.push(subject);
+                    if (time) labelParts.push(`(${time})`);
+                    return { idx: String(idx), label: labelParts.join(' - ') };
+                })
+                .filter(Boolean);
+
+            let html = validItems.map(item =>
+                `<option value="${item.idx}">${escapeHtml(item.label)}</option>`
+            ).join('');
+            html += `<option value="MANUAL">Kosong / Tulis Manual (........)</option>`;
+            select.innerHTML = html;
+
+            if (prevVal && [...select.options].some(o => o.value === prevVal)) {
+                select.value = prevVal;
+            } else if (validItems.length > 0) {
+                select.value = validItems[0].idx;
+            } else {
+                select.value = 'MANUAL';
+            }
+        }
+
+        function getSelectedAttendanceSchedule() {
+            const select = document.getElementById('attendance-schedule-select');
+            const val = select ? select.value : '';
+            if (val === 'MANUAL') {
+                return {
+                    dayDateHtml: '<span>..................................................</span>',
+                    subjectHtml: '<span>..........................................</span>',
+                    timeHtml: '<span>..................................................</span>'
+                };
+            }
+            const rows = typeof getJadwalAsasData === 'function' ? getJadwalAsasData() : jadwalAsasContoh;
+            const row = rows[Number(val)] || rows[0];
+            if (!row) {
+                return {
+                    dayDateHtml: '<span>..................................................</span>',
+                    subjectHtml: '<span>..........................................</span>',
+                    timeHtml: '<span>..................................................</span>'
+                };
+            }
+            const day = (row[0] || '').trim();
+            const date = (row[1] || '').trim();
+            const time = (row[3] || '').trim();
+            const subject = (row[4] || '').trim();
+            const dayDate = [day, date].filter(Boolean).join(', ');
+
+            return {
+                dayDateHtml: dayDate ? `<span class="font-bold">${escapeHtml(dayDate)}</span>` : '<span>..................................................</span>',
+                subjectHtml: subject ? `<span class="font-bold">${escapeHtml(subject)}</span>` : '<span>..........................................</span>',
+                timeHtml: time ? `<span class="font-bold">${escapeHtml(time)}</span>` : '<span>..................................................</span>'
+            };
+        }
+
         function renderAttendancePreview() {
             const container = document.getElementById('attendance-preview-container');
+            populateAttendanceScheduleSelect(true);
             const roomFilter = document.getElementById('attendance-room-filter')?.value || 'ALL';
             const cfg = getHeaderConfig();
+            const sched = getSelectedAttendanceSchedule();
 
             let targetRooms = allocatedRooms;
             if (roomFilter !== 'ALL') {
@@ -4375,15 +4454,15 @@
                 html += `
                     <div class="attendance-paper bg-white p-6 sm:p-8 mb-6 shadow-md rounded-lg page-break min-h-[280mm] max-w-[210mm] mx-auto border text-black" style="font-family: 'Times New Roman', Times, serif; font-size: 11pt;">
                         
-                        <div class="attendance-kop flex items-center justify-between border-b-4 border-black pb-2 mb-3">
-                            <img src="${logoLeftSrc}" class="w-28 h-20 object-contain flex-shrink-0" alt="Logo Pemkab">
+                        <div class="attendance-kop flex items-center justify-between border-b-4 border-black pb-3.5 mb-3.5">
+                            <img src="${logoLeftSrc}" class="w-24 h-20 object-contain flex-shrink-0" alt="Logo Pemkab">
                             <div class="text-center flex-grow font-kop px-2 leading-tight">
                                 <div class="text-[12pt] uppercase font-bold tracking-tight">${escapeHtml(cfg.gov1)}</div>
                                 <div class="text-[16pt] uppercase font-extrabold tracking-tight">${escapeHtml(cfg.school)}</div>
                                 <div class="text-[10pt] text-black">${escapeHtml(cfg.address)}</div>
                                 <div class="text-[10pt] text-black">${escapeHtml(getKopWebEmailLine(cfg))}</div>
                             </div>
-                            <img src="${logoRightSrc}" class="w-28 h-20 object-contain flex-shrink-0" alt="Logo Sekolah">
+                            <img src="${logoRightSrc}" class="w-24 h-20 object-contain flex-shrink-0" alt="Logo Sekolah">
                         </div>
 
                         <div class="text-center font-bold uppercase mb-3 leading-snug">
@@ -4392,40 +4471,34 @@
                             <div class="text-[11.5pt] font-bold">TAHUN PELAJARAN ${escapeHtml(cfg.tapel)}</div>
                         </div>
 
-                        <div class="grid grid-cols-12 gap-y-1 text-[10.5pt] mb-3 leading-snug">
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-32 inline-block">KOTA/KABUPATEN</span>
-                                <span class="mr-1.5">:</span>
-                                <span class="font-bold">KABUPATEN SITUBONDO</span>
-                            </div>
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-28 inline-block">RUANG</span>
-                                <span class="mr-1.5">:</span>
-                                <span class="font-bold">${roomNumDisplay}</span>
-                            </div>
-
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-32 inline-block">SEKOLAH</span>
-                                <span class="mr-1.5">:</span>
-                                <span class="font-bold uppercase">${escapeHtml(cfg.school)}</span>
-                            </div>
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-28 inline-block">HARI/TANGGAL</span>
-                                <span class="mr-1.5">:</span>
-                                <span>..................................................</span>
-                            </div>
-
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-32 inline-block">MATA PELAJARAN</span>
-                                <span class="mr-1.5">:</span>
-                                <span>..........................................</span>
-                            </div>
-                            <div class="col-span-6 flex items-baseline">
-                                <span class="w-28 inline-block">PUKUL</span>
-                                <span class="mr-1.5">:</span>
-                                <span>..................................................</span>
-                            </div>
-                        </div>
+                        <table class="w-full text-[10pt] mb-3 leading-snug border-collapse">
+                            <tbody>
+                                <tr>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap w-[21%]">KOTA/KABUPATEN</td>
+                                    <td class="py-0.5 px-1 w-[2%]">:</td>
+                                    <td class="py-0.5 pr-3 font-bold uppercase w-[34%] whitespace-nowrap">KABUPATEN SITUBONDO</td>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap w-[17%]">RUANG</td>
+                                    <td class="py-0.5 px-1 w-[2%]">:</td>
+                                    <td class="py-0.5 font-bold whitespace-nowrap w-[24%]">${roomNumDisplay}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap">SEKOLAH</td>
+                                    <td class="py-0.5 px-1">:</td>
+                                    <td class="py-0.5 pr-3 font-bold uppercase whitespace-nowrap">${escapeHtml(cfg.school)}</td>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap">HARI/TANGGAL</td>
+                                    <td class="py-0.5 px-1">:</td>
+                                    <td class="py-0.5 whitespace-nowrap">${sched.dayDateHtml}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap">MATA PELAJARAN</td>
+                                    <td class="py-0.5 px-1">:</td>
+                                    <td class="py-0.5 pr-3">${sched.subjectHtml}</td>
+                                    <td class="py-0.5 pr-1 whitespace-nowrap">PUKUL</td>
+                                    <td class="py-0.5 px-1">:</td>
+                                    <td class="py-0.5 whitespace-nowrap">${sched.timeHtml}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                         <table class="w-full border-collapse border border-black text-[10pt] mb-3">
                             <thead>
@@ -5408,4 +5481,5 @@
             });
         })();
     </script>
-</b
+</body>
+</html>
