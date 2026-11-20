@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Kartu & Pemetaan Nomor Bangku - SMPN 3 Besuki</title>
+    <title>ADMINISTRASI KELENGKAPAN UJIAN - SMPN 3 BESUKI</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome 6 Icons -->
@@ -556,6 +556,91 @@
         }
 
     </style>
+
+    <style id="left-sidebar-layout">
+        /* Sidebar dapat disembunyikan untuk memperluas area kerja. */
+        @media screen {
+            body { display: block !important; min-height: 100vh; }
+            body > header.no-print {
+                position: fixed !important; inset: 0 auto 0 0 !important;
+                width: 300px !important; height: 100vh !important;
+                overflow: hidden !important; z-index: 100 !important;
+                border-radius: 0 !important; transition: transform .25s ease, width .25s ease;
+            }
+            body > header.no-print > div {
+                width: 100% !important; max-width: none !important; height: 100% !important;
+                box-sizing: border-box !important; padding: 16px 12px !important;
+                display: flex !important; flex-direction: column !important;
+                align-items: stretch !important; justify-content: flex-start !important;
+                flex-wrap: nowrap !important; gap: 14px !important;
+            }
+            body > header.no-print > div > div:first-child {
+                align-items: center !important; flex-direction: column !important;
+                text-align: center !important; width: 100% !important; gap: 8px !important;
+                padding: 4px 2px 14px !important;
+                border-bottom: 1px solid rgba(255,255,255,.16) !important;
+                flex: 0 0 auto !important;
+            }
+            body > header.no-print > div > div:first-child > div:first-child {
+                margin: 0 auto !important;
+            }
+            body > header.no-print > div > div:first-child h1 {
+                display: block !important; width: 100% !important;
+                white-space: nowrap !important; word-break: normal !important;
+                overflow: visible !important; font-size: 11px !important;
+                line-height: 1.25 !important; letter-spacing: -.25px !important;
+                text-align: center !important;
+            }
+            body > header.no-print > div > div:first-child p {
+                font-size: 10px !important; line-height: 1.35 !important; margin-top: 4px !important;
+            }
+            body > header.no-print nav {
+                display: flex !important; flex-direction: column !important;
+                align-items: stretch !important; width: 100% !important;
+                max-width: none !important; min-height: 0 !important; flex: 1 1 auto !important;
+                overflow-x: hidden !important; overflow-y: auto !important;
+                gap: 4px !important; padding: 5px !important; border-radius: 10px !important;
+            }
+            body > header.no-print nav button {
+                width: 100% !important; min-height: 40px !important;
+                justify-content: flex-start !important; text-align: left !important;
+                white-space: normal !important; padding: 9px 10px !important; flex: 0 0 auto !important;
+            }
+            body > main {
+                width: auto !important; max-width: none !important;
+                margin-left: 300px !important; margin-right: 0 !important;
+                padding: 24px !important; transition: margin-left .25s ease;
+            }
+            #sidebar-toggle {
+                position: fixed !important; top: 12px !important; left: 310px !important;
+                z-index: 120 !important; width: 38px !important; height: 38px !important;
+                display: inline-flex !important; align-items: center !important;
+                justify-content: center !important; border-radius: 9px !important;
+                background: #0891b2 !important; color: white !important;
+                box-shadow: 0 3px 12px rgba(0,0,0,.22) !important;
+                transition: left .25s ease !important;
+            }
+            body.sidebar-collapsed > header.no-print { transform: translateX(-100%) !important; }
+            body.sidebar-collapsed > main { margin-left: 0 !important; }
+            body.sidebar-collapsed #sidebar-toggle { left: 12px !important; }
+        }
+        @media screen and (max-width: 700px) {
+            body > header.no-print { width: 270px !important; }
+            body > main { margin-left: 270px !important; padding: 14px !important; }
+            #sidebar-toggle { left: 278px !important; }
+            body.sidebar-collapsed > main { margin-left: 0 !important; }
+            body.sidebar-collapsed #sidebar-toggle { left: 12px !important; }
+            body > header.no-print > div { padding: 12px 8px !important; }
+            body > header.no-print > div > div:first-child h1 { font-size: 10px !important; }
+            body > header.no-print nav button { font-size: 11px !important; }
+        }
+        @media print {
+            #sidebar-toggle { display: none !important; }
+            body > header.no-print { display: none !important; }
+            body > main { margin: 0 !important; width: 100% !important; }
+        }
+    </style>
+
     <style id="global-times-new-roman-font">
         /* Samakan jenis huruf seluruh menu dan isi aplikasi tanpa mengubah ukuran teks. */
         html, body, body *:not(i):not(svg):not(path):not([class*="fa-"]) {
@@ -564,22 +649,25 @@
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+    <button id="sidebar-toggle" type="button" aria-label="Sembunyikan atau tampilkan sidebar"
+        title="Sembunyikan / tampilkan menu" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </button>
+
 
     <!-- Header Navigation Bar -->
     <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-30 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-cyan-600 flex items-center justify-center text-white font-bold text-xl shadow">
-                    <i class="fa-solid fa-graduation-cap"></i>
+            <div class="flex flex-col items-start space-y-2 w-full">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-white/10 text-white shrink-0">
+                    <i class="fa-solid fa-school text-2xl" aria-hidden="true"></i>
                 </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="font-bold text-base md:text-lg leading-tight">Generator Kartu & Nomor Meja Ujian SMPN 3 Besuki</h1>
-                        <span id="storage-status-badge" class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-hard-drive text-[9px]"></i> Memori Perangkat Aktif
-                        </span>
-                    </div>
-                    <p class="text-xs text-slate-400">Ukuran ID Card Presisi (85.6 x 54 mm), Logo Diperbesar Menyamping & Font Times New Roman 12pt</p>
+                <div class="w-full min-w-0">
+                    <h1 class="font-bold text-base md:text-lg leading-tight whitespace-normal break-words">ADMINISTRASI KELENGKAPAN UJIAN</h1>
+                    <p class="text-xs text-slate-400 mt-1">SMP NEGERI 3 BESUKI</p>
+                    <span id="storage-status-badge" class="mt-2 text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full font-semibold inline-flex items-center gap-1">
+                        <i class="fa-solid fa-hard-drive text-[9px]"></i> Memori Perangkat Aktif
+                    </span>
                 </div>
             </div>
 
@@ -1894,6 +1982,7 @@
                     const logoRightElem = document.getElementById('custom-logo-right-img');
                     if (logoLeftElem) logoLeftElem.src = customLogoLeftBase64 || getPemkabLogoSvg();
                     if (logoRightElem) logoRightElem.src = customLogoRightBase64 || getSchoolLogoSvg();
+                    updateApplicationHeaderLogos();
 
                     const stempelImg = document.getElementById('custom-stempel-img');
                     const defaultStempelIcon = document.getElementById('default-stempel-icon');
@@ -4081,6 +4170,9 @@
                 const byClass = {};
                 seats.forEach(stu => { const cls = stu.class || '-'; (byClass[cls] ||= []).push(stu); });
                 const classLines = Object.entries(byClass).map(([cls, list]) => `<div>${escapeHtml(cls)} = ${list.length} Siswa</div>`).join('');
+                // Lokasi ruang ditampilkan berdasarkan kelas yang menempati ruang tersebut.
+                const roomLocation = Object.keys(byClass).filter(cls => cls && cls !== '-').join(', ');
+                const locationLine = roomLocation ? `Kelas ${roomLocation}` : '-';
                 const numberLines = Object.entries(byClass).map(([cls, list]) => {
                     const nums = list.map(x => String(x.examNo || '')).filter(Boolean).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
                     return `<div>${escapeHtml(cls)} = ${nums.length ? `${escapeHtml(nums[0])} s/d ${escapeHtml(nums[nums.length-1])}` : '-'}</div>`;
@@ -4101,7 +4193,9 @@
                         </div>
                     </div>
                     <div class="room-number-details border-2 border-black rounded-lg p-4 font-bold leading-snug" style="font-size:20pt">
-                        <div class="grid grid-cols-[62mm_1fr] gap-y-2"><div class="border-t border-slate-300 pt-2">Peserta / Kelas</div><div class="border-t border-slate-300 pt-2">${classLines}</div>
+                        <div class="grid grid-cols-[62mm_1fr] gap-y-2">
+                        <div class="border-t border-slate-300 pt-2">Lokasi Ruang ${roomNo}</div><div class="border-t border-slate-300 pt-2">${escapeHtml(locationLine)}</div>
+                        <div class="border-t border-slate-300 pt-2">Peserta / Kelas</div><div class="border-t border-slate-300 pt-2">${classLines}</div>
                         <div class="border-t border-slate-300 pt-2">Nomor Peserta</div><div class="border-t border-slate-300 pt-2">${numberLines}</div></div>
                     </div>
                 </article>`;
@@ -4952,6 +5046,7 @@
                 const style = document.createElement('style');
                 style.id = 'room-number-print-style';
                 style.textContent = `
+                    @page{size:A4 portrait;margin:0!important}
                     #room-numbers-print-root{display:none}
                     .room-number-paper{width:200mm;height:287mm;box-sizing:border-box;background:#fff;border:1.5px solid #000;margin:0 auto 8mm;padding:7mm;display:flex;flex-direction:column;font-family:'Times New Roman',Times,serif;color:#000;overflow:hidden}
                     .room-number-letterhead{display:grid;grid-template-columns:25mm minmax(0,1fr) 25mm;align-items:center;column-gap:4mm;width:100%;box-sizing:border-box;border-bottom:4px double #000;padding:0 0 5mm;margin:0 0 5mm;min-height:29mm}
@@ -4969,14 +5064,13 @@
                     .room-number-detail-grid{display:grid;grid-template-columns:58mm 1fr;column-gap:4mm;row-gap:2mm}
                     .room-number-detail-divider{border-top:1px solid #888;padding-top:2mm}
                     @media print{
-                      @page{size:A4 portrait;margin:5mm}
                       html,body{margin:0!important;padding:0!important;background:#fff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
                       body>*:not(#room-numbers-print-root){display:none!important}
-                      #room-numbers-print-root{display:block!important;position:static!important;width:200mm!important;height:auto!important;margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important;box-sizing:border-box!important}
-                      #room-numbers-print-root .room-number-paper{width:200mm!important;height:287mm!important;min-height:287mm!important;margin:0!important;padding:7mm!important;border:1.5px solid #000!important;border-radius:0!important;box-shadow:none!important;break-after:page!important;page-break-after:always!important;box-sizing:border-box!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+                      #room-numbers-print-root{display:block!important;position:fixed!important;top:0!important;left:0!important;width:210mm!important;height:297mm!important;margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;box-sizing:border-box!important}
+                      #room-numbers-print-root .room-number-paper{position:absolute!important;top:0!important;left:0!important;width:210mm!important;height:297mm!important;min-height:297mm!important;max-height:297mm!important;margin:0!important;padding:7mm!important;border:1.5px solid #000!important;border-radius:0!important;box-shadow:none!important;transform:none!important;break-after:page!important;page-break-after:always!important;box-sizing:border-box!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
                       #room-numbers-print-root .room-number-paper:last-child{break-after:auto!important;page-break-after:auto!important}
                       /* Override aturan cetak global yang menyembunyikan semua elemen header */
-                      #room-numbers-print-root header{display:grid!important;visibility:visible!important;grid-template-columns:22mm minmax(0,1fr) 22mm!important;align-items:center!important;gap:4mm!important;width:100%!important;box-sizing:border-box!important;border-bottom:4px double #000!important;padding:0 0 5mm!important;margin:5mm 0 5mm!important;}
+                      #room-numbers-print-root header{display:grid!important;visibility:visible!important;grid-template-columns:22mm minmax(0,1fr) 22mm!important;align-items:center!important;gap:4mm!important;width:100%!important;box-sizing:border-box!important;border-bottom:4px double #000!important;padding:0 0 5mm!important;margin:0 0 5mm!important;}
                       #room-numbers-print-root header *{display:block!important;visibility:visible!important;color:#000!important;}
                       #room-numbers-print-root header img{display:block!important;visibility:visible!important;width:22mm!important;height:24mm!important;max-width:22mm!important;object-fit:contain!important;}
                       #room-numbers-print-root header > div{text-align:center!important;min-width:0!important;line-height:1.15!important;}
@@ -5071,6 +5165,13 @@
             return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
         }
 
+        function updateApplicationHeaderLogos() {
+            // Header aplikasi memakai ikon sekolah bawaan.
+            // Logo unggahan tetap digunakan pada kop dokumen dan hasil cetak.
+        }
+
+        document.addEventListener("DOMContentLoaded", updateApplicationHeaderLogos);
+
         function handleLogoLeftUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -5079,6 +5180,7 @@
                 customLogoLeftBase64 = e.target.result;
                 const img = document.getElementById('custom-logo-left-img');
                 if (img) img.src = customLogoLeftBase64;
+                updateApplicationHeaderLogos();
                 saveImagesToCloud();
                 showToast("Logo Pemkab berhasil diperbarui!");
             };
@@ -5089,6 +5191,7 @@
             customLogoLeftBase64 = null;
             const img = document.getElementById('custom-logo-left-img');
             if (img) img.src = getPemkabLogoSvg();
+            updateApplicationHeaderLogos();
             saveImagesToCloud();
             showToast("Logo Pemkab di-reset!");
         }
@@ -5101,6 +5204,7 @@
                 customLogoRightBase64 = e.target.result;
                 const img = document.getElementById('custom-logo-right-img');
                 if (img) img.src = customLogoRightBase64;
+                updateApplicationHeaderLogos();
                 saveImagesToCloud();
                 showToast("Logo Sekolah berhasil diperbarui!");
             };
@@ -5111,6 +5215,7 @@
             customLogoRightBase64 = null;
             const img = document.getElementById('custom-logo-right-img');
             if (img) img.src = getSchoolLogoSvg();
+            updateApplicationHeaderLogos();
             saveImagesToCloud();
             showToast("Logo Sekolah di-reset!");
         }
@@ -5757,5 +5862,20 @@
             });
         })();
     </script>
+
+<script>
+    function toggleSidebar() {
+        document.body.classList.toggle('sidebar-collapsed');
+        const button = document.getElementById('sidebar-toggle');
+        const hidden = document.body.classList.contains('sidebar-collapsed');
+        if (button) {
+            button.setAttribute('aria-label', hidden ? 'Tampilkan sidebar' : 'Sembunyikan sidebar');
+            button.setAttribute('title', hidden ? 'Tampilkan menu' : 'Sembunyikan menu');
+            button.innerHTML = hidden
+                ? '<i class="fa-solid fa-bars" aria-hidden="true"></i>'
+                : '<i class="fa-solid fa-angles-left" aria-hidden="true"></i>';
+        }
+    }
+</script>
 </body>
 </html>
