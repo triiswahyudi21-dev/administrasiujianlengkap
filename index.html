@@ -93,7 +93,7 @@
                 box-shadow: none !important;
                 border: none !important;
             }
-            /* Grid layout 8 ID cards per A4 page (2 cols x 4 rows) */
+            /* Grid layout 10 ID cards per Legal/F4 page (2 cols x 5 rows) */
             .card-grid {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
@@ -555,7 +555,10 @@
             }
         }
 
-    </style>
+            /* Label A., B., C. dibuat sejajar; baris lanjutan mulai sejajar dengan teks setelah label. */
+        #berita-acara-preview .ba-letter-paragraph { padding-left: 1.45em; text-indent: -1.45em; }
+
+</style>
 
     <style id="jadwal-pengawas-edit-signature-style">
         #tab-jadwal-pengawas-asas .jadwal-pengawas-table td[contenteditable="true"] { cursor:text; outline:none; transition:background .15s, box-shadow .15s; }
@@ -1415,6 +1418,9 @@
                 </div>
 
                 <div class="flex items-center gap-3">
+                    <select id="card-class-filter" onchange="renderCardsPreview()" class="text-xs p-2.5 rounded-xl border border-slate-700 bg-slate-800 text-white font-medium focus:ring-2 focus:ring-cyan-400 outline-none">
+                        <option value="ALL">Semua Kelas</option>
+                    </select>
                     <select id="card-room-filter" onchange="renderCardsPreview()" class="text-xs p-2.5 rounded-xl border border-slate-700 bg-slate-800 text-white font-medium focus:ring-2 focus:ring-cyan-400 outline-none">
                         <option value="ALL">Semua Ruangan</option>
                     </select>
@@ -1606,10 +1612,10 @@
                     <label>Waktu selesai <input id="ba-selesai" class="ba-field" placeholder="........"></label>
                     <label class="md:col-span-2">Pada sekolah <input id="ba-sekolah" type="text" class="ba-field" placeholder="................................................................"></label>
                     <label>Ruang <input id="ba-ruang" class="ba-field" placeholder="........................"></label>
-                    <label>Jumlah Peserta Yang Hadir <input id="ba-hadir" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
-                    <label>Nomor Peserta Yang Hadir <input id="ba-nomor" class="ba-field" placeholder="................................................................"></label>
-                    <label>Jumlah Peserta Yang Tidak Hadir <input id="ba-tidak-hadir" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
-                    <label class="md:col-span-3">Nomor peserta tidak hadir <input id="ba-nomor-tidak" type="text" class="ba-field" placeholder="................................................................"></label>
+                    <label>Jumlah Peserta <input id="ba-jumlah" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
+                    <label>Peserta Yang Hadir <input id="ba-hadir" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
+                    <label>Peserta Yang Tidak Hadir <input id="ba-tidak-hadir" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
+                    <label>Nomor Peserta Yang Tidak Hadir <input id="ba-nomor-tidak" type="text" inputmode="text" class="ba-field" placeholder="................................................................"></label>
                     <label>Mata pelajaran <input id="ba-mapel" class="ba-field" placeholder="................................"></label>
                     <label>Kode soal <input id="ba-kode" class="ba-field" placeholder="................................"></label>
                     <label>Jumlah lembar soal (eksemplar) <input id="ba-soal" type="text" inputmode="text" class="ba-field" placeholder="................................"></label>
@@ -1636,19 +1642,19 @@
                 <div class="text-center font-bold text-[14.5pt] mb-6">TAHUN AJARAN <span id="ba-tapel-preview">2026/2027</span></div>
                 <div class="ba-body-text text-justify text-[14pt] leading-relaxed">
                     <p class="mb-4">Pada hari ini <span data-ba="hari">........................</span> tanggal <span data-ba="tanggal">........................</span> bulan <span data-ba="bulan">........................</span> tahun <span data-ba="tahun">........................</span>.</p>
-                    <p class="mb-2">a. Telah diselenggarakan Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span>, dengan keterangan sebagai berikut:</p>
+                    <p class="mb-2 ba-letter-paragraph">A. Telah diselenggarakan Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-a">Ganjil</span> pada pukul <span data-ba="mulai">........</span> s/d <span data-ba="selesai">........</span> dengan keterangan sebagai berikut:</p>
                     <table class="ba-info-table w-full text-[14pt] mb-4" style="border-collapse:collapse;table-layout:fixed">
                         <tbody>
                             <tr><td class="w-[44%] py-1.5">Pada Sekolah</td><td class="w-6 py-1.5">:</td><td class="py-1.5" data-ba="sekolah" data-placeholder=".............................................................................................................................................................................."></td></tr>
                             <tr><td class="py-1.5">Ruang</td><td class="py-1.5">:</td><td class="py-1.5" data-ba="ruang" data-placeholder=".............................................................................................................................................................................."></td></tr>
-                            <tr><td class="py-1.5">Jumlah Peserta Yang Hadir</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="hadir" data-placeholder=".............................................................................................................................................................................."></span></td></tr>
-                            <tr><td class="py-1.5">Nomor Peserta Yang Hadir</td><td class="py-1.5">:</td><td class="py-1.5" data-ba="nomor" data-placeholder=".............................................................................................................................................................................."></td></tr>
-                            <tr><td class="py-1.5">Jumlah Peserta Yang Tidak Hadir</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="tidak-hadir" data-placeholder=".............................................................................................................................................................................."></span></td></tr>
-                            <tr><td class="py-1.5">Nomor Peserta Tidak Hadir</td><td class="py-1.5">:</td><td class="py-1.5" data-ba="nomor-tidak" data-placeholder=".............................................................................................................................................................................."></td></tr>
+                            <tr><td class="py-1.5">Jumlah Peserta</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="jumlah" data-placeholder="..............................................................................................................................................................................">..............................................................................................................................................................................</span></td></tr>
+                            <tr><td class="py-1.5">Peserta Yang Hadir</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="hadir" data-placeholder=".............................................................................................................................................................................."></span></td></tr>
+                            <tr><td class="py-1.5">Peserta Yang Tidak Hadir</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="tidak-hadir" data-placeholder=".............................................................................................................................................................................."></span></td></tr>
+                            <tr><td class="py-1.5">Nomor Peserta Yang Tidak Hadir</td><td class="py-1.5">:</td><td class="py-1.5"><span data-ba="nomor-tidak" data-placeholder=".............................................................................................................................................................................."></span></td></tr>
                         </tbody>
                     </table>
-                    <p class="mb-4">b. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-room">Ganjil</span> dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
-                    <p class="mb-2">c. Catatan selama Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-c">Ganjil</span>:</p>
+                    <p class="mb-4 ba-letter-paragraph">B. Telah dibuka sampul soal Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-b">Ganjil</span> untuk mata pelajaran <span data-ba="mapel">........................</span> dengan kode <span data-ba="kode">........................</span> di ruang Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-room">Ganjil</span> dengan disaksikan oleh para peserta dan berisi lembar soal <span data-ba="soal">......</span> eksemplar, lembar jawaban sebanyak <span data-ba="jawaban">......</span> eksemplar, berita acara sebanyak <span data-ba="ba">......</span> eksemplar dan blangko daftar hadir sebanyak <span data-ba="blangko">......</span> eksemplar.</p>
+                    <p class="mb-2 ba-letter-paragraph">C. Catatan selama Asesmen Sumatif Akhir Semester (ASAS) <span id="ba-semester-c">Ganjil</span>:</p>
                     <div id="ba-catatan-preview" class="mb-5">
                         <div id="ba-catatan-text" class="whitespace-pre-wrap min-h-[6mm]"></div>
                         <div class="ba-catatan-dotted-lines" aria-hidden="true">
@@ -3479,6 +3485,7 @@
                 renderCustomRoomOverridesUI();
             } else if (tabId === 'tab-preview-cards') {
                 populateFilterSelect('card-room-filter');
+                populateCardClassFilter();
                 renderCardsPreview();
             } else if (tabId === 'tab-preview-desk') {
                 populateFilterSelect('desk-room-filter');
@@ -4117,10 +4124,21 @@
             return parts.join(' ');
         }
 
+        // Filter kartu ujian berdasarkan kelas; nomor ujian tidak diubah.
+        function populateCardClassFilter() {
+            const select = document.getElementById('card-class-filter');
+            if (!select) return;
+            const current = select.value || 'ALL';
+            const classes = [...new Set(allocatedRooms.flatMap(r => r.seats.map(stu => String(stu.class || '').toUpperCase().trim())).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'id', {numeric:true}));
+            select.innerHTML = '<option value="ALL">Semua Kelas</option>' + classes.map(c => `<option value="${escapeHtml(c)}">Kelas ${escapeHtml(c)}</option>`).join('');
+            select.value = classes.includes(current) ? current : 'ALL';
+        }
+
         // --- RENDER CARDS PREVIEW ---
         function renderCardsPreview() {
             const container = document.getElementById('cards-preview-container');
             const roomFilter = document.getElementById('card-room-filter')?.value || 'ALL';
+            const classFilter = document.getElementById('card-class-filter')?.value || 'ALL';
             const cfg = getHeaderConfig();
 
             let targetRooms = allocatedRooms;
@@ -4130,13 +4148,14 @@
 
             let allSeats = [];
             targetRooms.forEach(r => allSeats.push(...r.seats));
+            if (classFilter !== 'ALL') allSeats = allSeats.filter(stu => String(stu.class || '').toUpperCase().trim() === classFilter);
 
             if (allSeats.length === 0) {
                 container.innerHTML = getEmptyPreviewHTML("Kartu Ujian");
                 return;
             }
 
-            const pageSize = 8;
+            const pageSize = 10;
             const pages = [];
             for (let i = 0; i < allSeats.length; i += pageSize) {
                 pages.push(allSeats.slice(i, i + pageSize));
@@ -4147,7 +4166,7 @@
 
             let html = '';
             pages.forEach((pageSeats) => {
-                html += `<div class="bg-white p-3 mb-6 shadow-md rounded-lg card-grid page-break min-h-[280mm] max-w-[210mm] mx-auto border grid grid-cols-2 gap-x-4 gap-y-3">`;
+                html += `<div class="bg-white p-3 mb-6 shadow-md rounded-lg card-grid page-break min-h-[300mm] max-w-[210mm] mx-auto border grid grid-cols-2 gap-x-4 gap-y-3">`;
                 pageSeats.forEach(stu => {
                     html += `
                         <div class="bg-white text-black flex flex-col justify-between p-2 rounded-lg relative overflow-hidden font-serif border-2 border-black shadow-sm mx-auto w-full box-border" style="width: 85.6mm; height: 54mm; max-width: 85.6mm; max-height: 54mm; font-family: 'Times New Roman', Times, serif;">
@@ -4864,7 +4883,18 @@
             let html = '';
             targetRooms.forEach(room => {
                 const roomNumDisplay = String(room.roomNum).padStart(2, '0');
-                const sortedSeats = [...room.seats].sort((a, b) => a.examNo.localeCompare(b.examNo));
+
+                // Pisahkan daftar hadir per kelas di dalam setiap ruang.
+                // Setiap kombinasi ruang dan kelas dicetak pada lembar tersendiri.
+                const classGroups = new Map();
+                room.seats.forEach(stu => {
+                    const className = String(stu.class || 'Kelas tidak diketahui').trim();
+                    if (!classGroups.has(className)) classGroups.set(className, []);
+                    classGroups.get(className).push(stu);
+                });
+
+                classGroups.forEach((classSeats, className) => {
+                const sortedSeats = [...classSeats].sort((a, b) => a.examNo.localeCompare(b.examNo));
                 const totalStudents = sortedSeats.length;
                 const rowHeightPx = totalStudents > 32 ? 21 : (totalStudents > 28 ? 23 : 26);
 
@@ -4896,7 +4926,7 @@
                                     <td class="py-0.5 pr-3 font-bold uppercase w-[34%] whitespace-nowrap">KABUPATEN SITUBONDO</td>
                                     <td class="py-0.5 pr-1 whitespace-nowrap w-[17%]">RUANG</td>
                                     <td class="py-0.5 px-1 w-[2%]">:</td>
-                                    <td class="py-0.5 font-bold whitespace-nowrap w-[24%]">${roomNumDisplay}</td>
+                                    <td class="py-0.5 font-bold whitespace-nowrap w-[24%]">${roomNumDisplay} / ${escapeHtml(className)}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-0.5 pr-1 whitespace-nowrap">SEKOLAH</td>
@@ -4949,13 +4979,19 @@
                             </tbody>
                         </table>
 
-                        <div class="flex justify-between items-start text-[10pt] mt-2 break-inside-avoid">
-                            <div class="w-[56%] leading-snug">
+                        <div class="flex justify-between items-start gap-3 text-[10pt] mt-2 break-inside-avoid">
+                            <div class="w-[58%] min-w-0 leading-snug">
                                 <div class="font-bold mb-1">Keterangan :</div>
-                                <div class="mb-1.5">1. Dibuat rangkap 2 (dua), masing-masing untuk ruang dan arsip sekolah.</div>
-                                <div class="mb-2">2. Pengawas ruang menyilang Nama Peserta yang tidak hadir.</div>
+                                <div class="grid grid-cols-[12mm_minmax(0,1fr)] gap-x-1 mb-1.5">
+                                    <span class="text-right">1.</span>
+                                    <span class="min-w-0 break-words">Dibuat rangkap 2 (dua), masing-masing untuk ruang dan arsip sekolah.</span>
+                                </div>
+                                <div class="grid grid-cols-[12mm_minmax(0,1fr)] gap-x-1 mb-2">
+                                    <span class="text-right">2.</span>
+                                    <span class="min-w-0 break-words">Pengawas ruang menyilang Nama Peserta yang tidak hadir.</span>
+                                </div>
 
-                                <table class="w-[92%] border-collapse border border-black text-[9.5pt]">
+                                <table class="w-full border-collapse border border-black text-[9.5pt]">
                                     <tbody>
                                         <tr>
                                             <td class="border border-black px-2 py-1 w-[72%]">Jumlah Peserta yang Seharusnya Hadir</td>
@@ -4973,7 +5009,7 @@
                                 </table>
                             </div>
 
-                            <div class="invigilator-sign w-[38%] text-center pt-1">
+                            <div class="invigilator-sign w-[38%] min-w-0 text-center pt-1">
                                 <div>Pengawas Ruang,</div>
                                 <div class="h-20"></div>
                                 <div class="font-bold">(...................................................)</div>
@@ -4983,6 +5019,7 @@
 
                     </div>
                 `;
+                });
             });
 
             container.innerHTML = html;
@@ -5103,7 +5140,6 @@
                                 <th class="border border-black py-1.5 px-1 w-[6%]">No.</th>
                                 <th class="border border-black py-1.5 px-1 w-[8%]">Kode</th>
                                 <th class="border border-black py-1.5 px-2 w-[30%]">Nama Pengawas Ruang</th>
-                                <th class="border border-black py-1.5 px-2 w-[22%]">NIP</th>
                                 <th class="border border-black py-1.5 px-1 w-[12%]">Ruang</th>
                                 <th class="border border-black py-1.5 px-1 w-[22%]" colspan="2">Tanda Tangan</th>
                             </tr>
@@ -5116,9 +5152,10 @@
                                         <td class="border border-black px-1 text-center">${r.no}</td>
                                         <td class="border border-black px-1 text-center font-bold">${escapeHtml(r.code)}</td>
                                         <td class="border border-black px-2 font-semibold">${escapeHtml(r.name)}</td>
-                                        <td class="border border-black px-2 text-center"></td>
                                         <td class="border border-black px-1 text-center font-semibold">${escapeHtml(r.room)}</td>
-                                        <td colspan="2" class="border border-black px-1.5 align-middle" style="height:36px;"></td>
+                                        <td colspan="2" class="border border-black align-middle" style="height:36px; position:relative;">
+                                            <div style="position:absolute; top:50%; transform:translateY(-50%); ${isOdd ? 'left:8px;' : 'left:45%;'} font-weight:normal;">${r.no}.</div>
+                                        </td>
                                     </tr>
                                 `;
                             }).join('')}
@@ -5234,14 +5271,14 @@
                 style.id = 'dynamic-print-orientation-style';
                 style.textContent = `
                     @media print {
-                        @page { size: A4 portrait; margin: 15mm; }
+                        @page { size: 215mm 330mm; margin: 8mm; }
                         html, body { margin: 0 !important; padding: 0 !important; }
                         #tab-preview-cards .print-area { padding: 0 !important; margin: 0 !important; overflow: visible !important; background: transparent !important; border: 0 !important; }
                         #tab-preview-cards .card-grid {
                             width: 180mm !important; max-width: 180mm !important; min-height: 0 !important;
                             height: auto !important; margin: 0 auto !important; padding: 0 !important;
                             grid-template-columns: repeat(2, 85.6mm) !important;
-                            grid-template-rows: repeat(4, 54mm) !important;
+                            grid-template-rows: repeat(5, 54mm) !important;
                             justify-content: center !important; align-content: start !important;
                             gap: 3mm 4mm !important; box-sizing: border-box !important;
                             border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
