@@ -6285,7 +6285,7 @@
     <script>
         (function(){
             const KEY='ba_asas_manual_v1';
-            const ids=['hari','tanggal','bulan','tahun','mulai','selesai','sekolah','ruang','hadir','nomor','tidak-hadir','nomor-tidak','mapel','kode','soal','jawaban','ba','blangko','pengawas','nip','catatan'];
+            const ids=['hari','tanggal','bulan','tahun','mulai','selesai','sekolah','ruang','jumlah','hadir','nomor','tidak-hadir','nomor-tidak','mapel','kode','soal','jawaban','ba','blangko','pengawas','nip','catatan'];
             function syncKop(){
                 const g=id=>document.getElementById(id);
                 if(!g('ba-gov1'))return;
@@ -6316,7 +6316,10 @@
                     });
                 });
                 const catEl=document.getElementById('ba-catatan-text');
+                const catatanTerisi=Boolean((data.catatan||'').trim());
                 if(catEl){catEl.textContent=(data.catatan||'').trim();}
+                const garisCatatan=document.querySelector('#ba-catatan-preview .ba-catatan-dotted-lines');
+                if(garisCatatan){garisCatatan.style.display=catatanTerisi?'none':'';}
                 document.getElementById('ba-nama-preview').textContent=(data.pengawas||'').trim()||'................................................';
                 document.getElementById('ba-nip-preview').textContent=(data.nip||'').trim()||'................................';
                 try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
