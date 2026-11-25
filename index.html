@@ -718,6 +718,113 @@
 @media print { .monev-check-print th.monev-merge-center { text-align:center!important; vertical-align:middle!important; } .monev-check-print tbody td:nth-child(2) { text-align:left!important; } }
 </style>
 
+
+<style id="monev-final-table-font-18">
+/* Ukuran teks 18px khusus tabel Instrumen Monev; margin dan tata letak tidak diubah. */
+#tab-monev table.monev-form-table,
+#tab-monev table.monev-form-table *,
+#monev-print-area table.monev-print-table,
+#monev-print-area table.monev-print-table * {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+}
+@media print {
+    body.monev-printing #monev-print-area table.monev-print-table,
+    body.monev-printing #monev-print-area table.monev-print-table * {
+        font-size: 18px !important;
+        line-height: 1.2 !important;
+    }
+}
+</style>
+
+
+<style id="monev-specific-font-14-fix">
+/* Ukuran 14px hanya untuk label kolom/teks yang diminta pada Instrumen Monev. */
+/* Data peserta: No, Peserta (Terdaftar/Tidak Hadir/Hadir), dan Jumlah. */
+#tab-monev .monev-participant-form th:nth-child(1),
+#tab-monev .monev-participant-form th:nth-child(2),
+#tab-monev .monev-participant-form th:last-child,
+#tab-monev .monev-participant-form tbody td:nth-child(1),
+#tab-monev .monev-participant-form tbody td:nth-child(2),
+#tab-monev .monev-participant-form tbody td:last-child,
+#monev-print-area > .monev-print-table:first-of-type th:nth-child(1),
+#monev-print-area > .monev-print-table:first-of-type th:nth-child(2),
+#monev-print-area > .monev-print-table:first-of-type th:last-child,
+#monev-print-area > .monev-print-table:first-of-type tbody td:nth-child(1),
+#monev-print-area > .monev-print-table:first-of-type tbody td:nth-child(2),
+#monev-print-area > .monev-print-table:first-of-type tbody td:last-child {
+  font-size:14px !important; line-height:1.2 !important;
+}
+/* Hasil monitoring: No, pilihan Ketersediaan Ya/Tidak, dan Keterangan. */
+#tab-monev .monev-checklist-form th:nth-child(1),
+#tab-monev .monev-checklist-form th:nth-child(3),
+#tab-monev .monev-checklist-form th:nth-child(4),
+#tab-monev .monev-checklist-form th:nth-child(5),
+#tab-monev .monev-checklist-form tbody td:nth-child(1),
+#tab-monev .monev-checklist-form tbody td:nth-child(3),
+#tab-monev .monev-checklist-form tbody td:nth-child(4),
+#tab-monev .monev-checklist-form tbody td:nth-child(5),
+#monev-print-area .monev-check-print th:nth-child(1),
+#monev-print-area .monev-check-print th:nth-child(3),
+#monev-print-area .monev-check-print th:nth-child(4),
+#monev-print-area .monev-check-print th:nth-child(5),
+#monev-print-area .monev-check-print tbody td:nth-child(1),
+#monev-print-area .monev-check-print tbody td:nth-child(3),
+#monev-print-area .monev-check-print tbody td:nth-child(4),
+#monev-print-area .monev-check-print tbody td:nth-child(5) {
+  font-size:14px !important; line-height:1.2 !important;
+}
+</style>
+
+
+<style id="monev-header-font-14px">
+/* Header tabel hasil monitoring: No, Komponen, Ketersediaan, Ya, Tidak, dan Keterangan = 14px. */
+#tab-monev .monev-checklist-form thead th,
+#monev-print-area .monev-check-print thead th {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+}
+</style>
+
+<style id="monev-table-14px-and-availability-width-fix">
+/* Tabel hasil monitoring: seluruh teks 14px, termasuk header, isi, dan isian keterangan. */
+#tab-monev .monev-checklist-form th,
+#tab-monev .monev-checklist-form td,
+#tab-monev .monev-checklist-form input,
+#tab-monev .monev-checklist-form input::placeholder,
+#monev-print-area .monev-check-print th,
+#monev-print-area .monev-check-print td {
+  font-size:14px !important;
+  line-height:1.2 !important;
+}
+/* Lebarkan sedikit kolom Ya/Tidak (bagian Ketersediaan), dengan menyeimbangkan kolom lain. */
+#tab-monev .monev-checklist-form { table-layout:fixed; }
+#tab-monev .monev-checklist-form th:nth-child(1),
+#tab-monev .monev-checklist-form td:nth-child(1) { width:6%; }
+#tab-monev .monev-checklist-form th:nth-child(2),
+#tab-monev .monev-checklist-form td:nth-child(2) { width:52%; }
+#tab-monev .monev-checklist-form th:nth-child(3),
+#tab-monev .monev-checklist-form td:nth-child(3),
+#tab-monev .monev-checklist-form th:nth-child(4),
+#tab-monev .monev-checklist-form td:nth-child(4) { width:10%; }
+#tab-monev .monev-checklist-form th:nth-child(5),
+#tab-monev .monev-checklist-form td:nth-child(5) { width:22%; }
+#monev-print-area .monev-check-print { table-layout:fixed !important; }
+#monev-print-area .monev-check-print th:nth-child(1),
+#monev-print-area .monev-check-print td:nth-child(1) { width:6% !important; }
+#monev-print-area .monev-check-print th:nth-child(2),
+#monev-print-area .monev-check-print td:nth-child(2) { width:52% !important; }
+#monev-print-area .monev-check-print th:nth-child(3),
+#monev-print-area .monev-check-print td:nth-child(3),
+#monev-print-area .monev-check-print th:nth-child(4),
+#monev-print-area .monev-check-print td:nth-child(4) { width:10% !important; }
+#monev-print-area .monev-check-print th:nth-child(5),
+#monev-print-area .monev-check-print td:nth-child(5) { width:22% !important; }
+@media print {
+  body.monev-printing #monev-print-area .monev-check-print th,
+  body.monev-printing #monev-print-area .monev-check-print td { font-size:14px !important; line-height:1.2 !important; }
+}
+</style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
     <button id="sidebar-toggle" type="button" aria-label="Sembunyikan atau tampilkan sidebar"
@@ -1678,8 +1785,8 @@
 <section id="tab-monev" class="tab-content space-y-6 hidden">
 <div class="bg-white rounded-2xl border shadow-sm p-5 no-print"><div class="flex flex-wrap justify-between gap-3 border-b pb-4 mb-4"><div><h2 class="text-xl font-bold">Instrumen Monitoring dan Evaluasi ASAS</h2><p class="text-sm text-slate-500">Form mengikuti dokumen contoh. Isian tersimpan otomatis di perangkat.</p></div><div class="flex gap-2"><button onclick="monevReset()" class="px-3 py-2 rounded-lg bg-slate-100">Kosongkan Form</button><button onclick="monevPrint()" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-bold">Cetak Instrumen Monev</button></div></div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm"><label>Nama Satuan Pendidikan<input id="mv-nama" class="monev-field"></label><label>Nama Kepala Satuan Pendidikan<input id="mv-kepala" class="monev-field"></label><label>Alamat Satuan Pendidikan<input id="mv-alamat" class="monev-field"></label><label>Hari/Tanggal Monitoring<input id="mv-hari" class="monev-field"></label><label>Waktu Pelaksanaan ASAS<input id="mv-waktu" class="monev-field"></label><label>Jumlah Ruang ASAS<input id="mv-ruang" class="monev-field"></label>
-<div class="md:col-span-2"><b>Data Peserta (Pa/Pi per kelas)</b><div class="overflow-x-auto"><table class="monev-form-table"><thead><tr><th rowspan="2">No</th><th rowspan="2">Peserta</th><th colspan="2">VII</th><th colspan="2">VIII</th><th colspan="2">IX</th><th rowspan="2">Jumlah</th></tr><tr><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th></tr></thead><tbody><tr><td>1</td><td>Terdaftar</td><td><input class="monev-count" id="mv-vii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-vii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-viii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-viii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-ix-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-ix-pi" inputmode="numeric" placeholder="0"></td><td id="mv-total-reg">0</td></tr><tr><td>2</td><td>Tidak Hadir</td><td><input class="monev-count" id="mv-abs-vii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-vii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-viii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-viii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-ix-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-ix-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-total-abs-manual" inputmode="numeric" placeholder=""></td></tr><tr><td>3</td><td>Hadir</td><td><input class="monev-count" id="mv-att-vii-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-vii-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-viii-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-viii-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-ix-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-ix-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-total-att-manual" inputmode="numeric" placeholder=""></td></tr></tbody></table></div></div>
-<div class="md:col-span-2"><b>Data Hasil Monitoring dan Evaluasi</b><div class="overflow-x-auto"><table class="monev-form-table"><thead><tr><th class="monev-center-head">No</th><th class="monev-center-head">Komponen Yang Dimonitor</th><th>Ya</th><th>Tidak</th><th class="monev-center-head">Keterangan</th></tr></thead><tbody><tr><td>1</td><td>Proposal atau Panduan Pelaksanaan kegiatan ASAS</td><td><input type="checkbox" id="mv-yes-1"></td><td><input type="checkbox" id="mv-no-1"></td><td><input id="mv-note-1" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>2</td><td>SK Kepanitiaan dan Uraian Tugas</td><td><input type="checkbox" id="mv-yes-2"></td><td><input type="checkbox" id="mv-no-2"></td><td><input id="mv-note-2" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>3</td><td>Jadwal Kepengawasan</td><td><input type="checkbox" id="mv-yes-3"></td><td><input type="checkbox" id="mv-no-3"></td><td><input id="mv-note-3" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>4</td><td>Jadwal ASAS Utama dan Susulan</td><td><input type="checkbox" id="mv-yes-4"></td><td><input type="checkbox" id="mv-no-4"></td><td><input id="mv-note-4" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>5</td><td>Denah ruang dan denah lokasi ASAS</td><td><input type="checkbox" id="mv-yes-5"></td><td><input type="checkbox" id="mv-no-5"></td><td><input id="mv-note-5" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>6</td><td>Kisi-kisi soal dan pedoman penskoran</td><td><input type="checkbox" id="mv-yes-6"></td><td><input type="checkbox" id="mv-no-6"></td><td><input id="mv-note-6" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>7</td><td>Naskah soal berbasis Tes Kemampuan Akademik (TKA)</td><td><input type="checkbox" id="mv-yes-7"></td><td><input type="checkbox" id="mv-no-7"></td><td><input id="mv-note-7" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>8</td><td>Ruang Pengawas ASAS</td><td><input type="checkbox" id="mv-yes-8"></td><td><input type="checkbox" id="mv-no-8"></td><td><input id="mv-note-8" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>9</td><td>Lembar jawaban ASAS</td><td><input type="checkbox" id="mv-yes-9"></td><td><input type="checkbox" id="mv-no-9"></td><td><input id="mv-note-9" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>10</td><td>Kartu peserta ASAS</td><td><input type="checkbox" id="mv-yes-10"></td><td><input type="checkbox" id="mv-no-10"></td><td><input id="mv-note-10" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>11</td><td>Nomor ujian pada setiap meja</td><td><input type="checkbox" id="mv-yes-11"></td><td><input type="checkbox" id="mv-no-11"></td><td><input id="mv-note-11" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>12</td><td>Tata tertib dan daftar hadir peserta dan pengawas ASAS.</td><td><input type="checkbox" id="mv-yes-12"></td><td><input type="checkbox" id="mv-no-12"></td><td><input id="mv-note-12" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>13</td><td>Berita acara pelaksanaan ASAS setiap ruang</td><td><input type="checkbox" id="mv-yes-13"></td><td><input type="checkbox" id="mv-no-13"></td><td><input id="mv-note-13" class="monev-field" placeholder="Keterangan"></td></tr></tbody></table></div></div>
+<div class="md:col-span-2"><b>Data Peserta (Pa/Pi per kelas)</b><div class="overflow-x-auto"><table class="monev-form-table monev-participant-form"><thead><tr><th rowspan="2">No</th><th rowspan="2">Peserta</th><th colspan="2">VII</th><th colspan="2">VIII</th><th colspan="2">IX</th><th rowspan="2">Jumlah</th></tr><tr><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th></tr></thead><tbody><tr><td>1</td><td>Terdaftar</td><td><input class="monev-count" id="mv-vii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-vii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-viii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-viii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-ix-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-ix-pi" inputmode="numeric" placeholder="0"></td><td id="mv-total-reg">0</td></tr><tr><td>2</td><td>Tidak Hadir</td><td><input class="monev-count" id="mv-abs-vii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-vii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-viii-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-viii-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-ix-pa" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-abs-ix-pi" inputmode="numeric" placeholder="0"></td><td><input class="monev-count" id="mv-total-abs-manual" inputmode="numeric" placeholder=""></td></tr><tr><td>3</td><td>Hadir</td><td><input class="monev-count" id="mv-att-vii-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-vii-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-viii-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-viii-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-ix-pa" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-att-ix-pi" inputmode="numeric" placeholder=""></td><td><input class="monev-count" id="mv-total-att-manual" inputmode="numeric" placeholder=""></td></tr></tbody></table></div></div>
+<div class="md:col-span-2"><b>Data Hasil Monitoring dan Evaluasi</b><div class="overflow-x-auto"><table class="monev-form-table monev-checklist-form"><thead><tr><th class="monev-center-head">No</th><th class="monev-center-head">Komponen Yang Dimonitor</th><th>Ya</th><th>Tidak</th><th class="monev-center-head">Keterangan</th></tr></thead><tbody><tr><td>1</td><td>Proposal atau Panduan Pelaksanaan kegiatan ASAS</td><td><input type="checkbox" id="mv-yes-1"></td><td><input type="checkbox" id="mv-no-1"></td><td><input id="mv-note-1" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>2</td><td>SK Kepanitiaan dan Uraian Tugas</td><td><input type="checkbox" id="mv-yes-2"></td><td><input type="checkbox" id="mv-no-2"></td><td><input id="mv-note-2" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>3</td><td>Jadwal Kepengawasan</td><td><input type="checkbox" id="mv-yes-3"></td><td><input type="checkbox" id="mv-no-3"></td><td><input id="mv-note-3" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>4</td><td>Jadwal ASAS Utama dan Susulan</td><td><input type="checkbox" id="mv-yes-4"></td><td><input type="checkbox" id="mv-no-4"></td><td><input id="mv-note-4" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>5</td><td>Denah ruang dan denah lokasi ASAS</td><td><input type="checkbox" id="mv-yes-5"></td><td><input type="checkbox" id="mv-no-5"></td><td><input id="mv-note-5" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>6</td><td>Kisi-kisi soal dan pedoman penskoran</td><td><input type="checkbox" id="mv-yes-6"></td><td><input type="checkbox" id="mv-no-6"></td><td><input id="mv-note-6" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>7</td><td>Naskah soal berbasis Tes Kemampuan Akademik (TKA)</td><td><input type="checkbox" id="mv-yes-7"></td><td><input type="checkbox" id="mv-no-7"></td><td><input id="mv-note-7" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>8</td><td>Ruang Pengawas ASAS</td><td><input type="checkbox" id="mv-yes-8"></td><td><input type="checkbox" id="mv-no-8"></td><td><input id="mv-note-8" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>9</td><td>Lembar jawaban ASAS</td><td><input type="checkbox" id="mv-yes-9"></td><td><input type="checkbox" id="mv-no-9"></td><td><input id="mv-note-9" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>10</td><td>Kartu peserta ASAS</td><td><input type="checkbox" id="mv-yes-10"></td><td><input type="checkbox" id="mv-no-10"></td><td><input id="mv-note-10" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>11</td><td>Nomor ujian pada setiap meja</td><td><input type="checkbox" id="mv-yes-11"></td><td><input type="checkbox" id="mv-no-11"></td><td><input id="mv-note-11" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>12</td><td>Tata tertib dan daftar hadir peserta dan pengawas ASAS.</td><td><input type="checkbox" id="mv-yes-12"></td><td><input type="checkbox" id="mv-no-12"></td><td><input id="mv-note-12" class="monev-field" placeholder="Keterangan"></td></tr><tr><td>13</td><td>Berita acara pelaksanaan ASAS setiap ruang</td><td><input type="checkbox" id="mv-yes-13"></td><td><input type="checkbox" id="mv-no-13"></td><td><input id="mv-note-13" class="monev-field" placeholder="Keterangan"></td></tr></tbody></table></div></div>
 <label class="md:col-span-2">Catatan/saran<textarea id="mv-catatan" rows="4" class="monev-field"></textarea></label><label>Tanggal tanda tangan<input id="mv-tanggal" class="monev-field" placeholder="Situbondo, .............. 2026"></label><label>Nama Kepala Satuan Pendidikan<input id="mv-ttd-kepala" class="monev-field"></label><label>NIP Kepala Satuan Pendidikan<input id="mv-nip-kepala" class="monev-field"></label><label>Nama Pengawas Pembina<input id="mv-ttd-pengawas" class="monev-field"></label><label>NIP Pengawas Pembina<input id="mv-nip-pengawas" class="monev-field"></label></div></div>
 <div id="monev-print-area" class="monev-paper bg-white max-w-[210mm] mx-auto p-6 shadow border text-black"><div class="monev-kop"><img class="monev-kop-logo" data-monev-logo alt="Logo Pemkab Situbondo"><div>PEMERINTAH KABUPATEN SITUBONDO</div><b>DINAS PENDIDIKAN DAN KEBUDAYAAN</b><div>JL. Madura 55 A Telp. 671120-671951 Fax 670866</div><div>SITUBONDO (68322)</div></div><h3 class="monev-title">MONITORING DAN EVALUASI PELAKSANAAN<br>ASESMEN SUMATIF AKHIR SEMESTER GANJIL<br>TAHUN PELAJARAN 2026/2027</h3><div class="monev-meta"><div>Nama Satuan Pendidikan<span>:</span><span data-mv="nama"></span></div><div>Nama Kepala Satuan Pendidikan<span>:</span><span data-mv="kepala"></span></div><div>Alamat Satuan Pendidikan<span>:</span><span data-mv="alamat"></span></div><div>Hari/Tanggal Monitoring<span>:</span><span data-mv="hari"></span></div><div>Waktu Pelaksanaan ASAS<span>:</span><span data-mv="waktu"></span></div><div>Jumlah Ruang ASAS<span>:</span><span data-mv="ruang"></span></div></div>
 <h4 class="monev-section">DATA PESERTA ASESMEN SUMATIF AKHIR SEMESTER GANJIL</h4><table class="monev-print-table"><thead><tr><th rowspan="2">NO</th><th rowspan="2">PESERTA</th><th colspan="2">VII</th><th colspan="2">VIII</th><th colspan="2">IX</th><th rowspan="2">JUMLAH</th></tr><tr><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th><th>Pa</th><th>Pi</th></tr></thead><tbody><tr><td>1.</td><td>Terdaftar</td><td data-reg="vii-pa"></td><td data-reg="vii-pi"></td><td data-reg="viii-pa"></td><td data-reg="viii-pi"></td><td data-reg="ix-pa"></td><td data-reg="ix-pi"></td><td data-total="reg"></td></tr><tr><td>2.</td><td>Tidak Hadir</td><td data-abs="vii-pa"></td><td data-abs="vii-pi"></td><td data-abs="viii-pa"></td><td data-abs="viii-pi"></td><td data-abs="ix-pa"></td><td data-abs="ix-pi"></td><td data-total="abs"></td></tr><tr><td>3.</td><td>Hadir</td><td data-att="vii-pa"></td><td data-att="vii-pi"></td><td data-att="viii-pa"></td><td data-att="viii-pi"></td><td data-att="ix-pa"></td><td data-att="ix-pi"></td><td data-total="att"></td></tr></tbody></table>
@@ -3478,6 +3585,12 @@
 #tab-monev .monev-form-table tbody td:nth-child(2), #monev-print-area .monev-check-print tbody td:nth-child(2) { text-align:left!important; vertical-align:middle!important; }
 @media print { #monev-print-area .monev-check-print tbody td:nth-child(2) { text-align:left!important; vertical-align:middle!important; } }
 </style>
+
+<style id="monev-screen-font-18">
+/* Memperbesar teks tabel menu Instrumen Monev saja; margin/layout tetap. */
+#tab-monev .monev-form-table th, #tab-monev .monev-form-table td, #tab-monev .monev-form-table input, #tab-monev .monev-form-table input::placeholder { font-size: 18px !important; }
+</style>
+
 </head><body>${area.innerHTML}<script>window.onload=function(){window.print();};<\/script>
 <style id="monev-table-center-align-fix">
 /* Instrumen Monev: kolom No, Komponen, dan Keterangan rata tengah (horizontal + vertikal), untuk layar dan cetak/PDF */
@@ -3635,7 +3748,53 @@
 }
 </style>
 
-</body></html>`);
+</body>
+<style id="monev-signature-user-final-adjustment">
+/* Penyesuaian tanda tangan: ukuran teks 14px, ruang tanda tangan sedikit dipersempit,
+   serta jabatan, garis nama, dan NIP sejajar pada masing-masing kolom. */
+#monev-print-area .monev-date,
+#monev-print-area .monev-signs,
+#monev-print-area .monev-signs .monev-sign-role,
+#monev-print-area .monev-signs b[data-mv^="ttd-"],
+#monev-print-area .monev-signs > div > div:last-child {
+  font-size:14px !important;
+}
+#monev-print-area .monev-signs .monev-sign-role,
+#monev-print-area .monev-signs b[data-mv^="ttd-"],
+#monev-print-area .monev-signs > div > div:last-child {
+  display:block !important;
+  width:84% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  box-sizing:border-box !important;
+  text-align:left !important;
+}
+#monev-print-area .monev-sign-space {
+  height:22mm !important;
+}
+#monev-print-area .monev-signs b[data-mv^="ttd-"] {
+  min-height:5mm !important;
+  margin-bottom:1mm !important;
+  padding:0 !important;
+  border-bottom:1px dotted #000 !important;
+  text-decoration:none !important;
+}
+#monev-print-area .monev-signs > div > div:last-child {
+  white-space:nowrap !important;
+}
+@media print {
+  #monev-print-area .monev-date,
+  #monev-print-area .monev-signs,
+  #monev-print-area .monev-signs .monev-sign-role,
+  #monev-print-area .monev-signs b[data-mv^="ttd-"],
+  #monev-print-area .monev-signs > div > div:last-child {
+    font-size:14px !important;
+  }
+  #monev-print-area .monev-sign-space { height:22mm !important; }
+}
+</style>
+
+</html>`);
             win.document.close();
         }
 
@@ -6699,5 +6858,70 @@
 }
 @media screen and (max-width:640px) {
   #monev-print-area .monev-sign-space {height:22mm!important;}
+}
+</style>
+
+<style id="monev-signature-14pt-raised-aligned">
+/* Tanda tangan Monev: teks 14pt, ruang tanda tangan sedikit dipersingkat,
+   dan garis nama sejajar pada kedua kolom. */
+#monev-print-area .monev-date,
+#monev-print-area .monev-signs,
+#monev-print-area .monev-signs * {
+  font-size:14pt!important;
+  line-height:1.2!important;
+}
+#monev-print-area .monev-signs {
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  column-gap:0!important;
+  align-items:start!important;
+  width:100%!important;
+  text-align:left!important;
+}
+#monev-print-area .monev-signs>div {
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
+#monev-print-area .monev-signs .monev-sign-role,
+#monev-print-area .monev-signs b[data-mv^="ttd-"],
+#monev-print-area .monev-signs>div>div:last-child {
+  display:block!important;
+  width:78%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  text-align:left!important;
+  box-sizing:border-box!important;
+}
+#monev-print-area .monev-sign-space {
+  height:22mm!important;
+}
+#monev-print-area .monev-signs b[data-mv^="ttd-"] {
+  height:6mm!important;
+  min-height:6mm!important;
+  margin-top:0!important;
+  margin-bottom:1mm!important;
+  border-bottom:1px dotted #000!important;
+  text-decoration:none!important;
+  font-weight:700!important;
+  overflow-wrap:anywhere!important;
+  box-sizing:border-box!important;
+}
+@media print {
+  #monev-print-area .monev-date,
+  #monev-print-area .monev-signs,
+  #monev-print-area .monev-signs * {
+    font-size:14pt!important;
+    line-height:1.2!important;
+  }
+  #monev-print-area .monev-sign-space {height:22mm!important;}
+  #monev-print-area .monev-signs {
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
 }
 </style>
